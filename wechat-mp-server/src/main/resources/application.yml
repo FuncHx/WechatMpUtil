@@ -1,0 +1,39 @@
+server:
+  port: 80
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/wechat_mp?characterEncoding=utf8&serverTimezone=UTC
+    username: root
+    password: cyh0110
+    type: com.alibaba.druid.pool.DruidDataSource
+  thymeleaf:
+    cache: false
+    prefix:
+      classpath: /templates
+
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+wx:
+  mp:
+    app-id: wxf29431fbf84c322b
+    secret: 1606f0fb81850b53208c7a57b056498a
+    token: token
+    aes-key: test
+
+mybatis:
+  type-aliases-package: com.wechat.web.domain
+
+img:
+  path: D:\images\
+mybatis-plus:
+  mapper-locations: classpath*:mapping/*.xml
+  type-aliases-package: com.wechat.web.domain
+
+
+jwt:
+  key: cyh
