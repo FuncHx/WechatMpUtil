@@ -6,6 +6,7 @@ import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
@@ -21,15 +22,15 @@ import org.springframework.web.context.request.async.AsyncRequestTimeoutExceptio
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import java.nio.file.AccessDeniedException;
+
 
 @Slf4j
 @Component
 @RestControllerAdvice // 在controller层添加通知。如果使用@ControllerAdvice，则方法上需要添加@ResponseBody
 public class UnifiedExceptionHandler {
 
-    @ExceptionHandler(value = AccessDeniedException.class)
-    public Response handleAccessDeniedException(AccessDeniedException e) {
+    @ExceptionHandler(value = java.nio.file.AccessDeniedException.class)
+    public Response handleAccessDeniedException(java.nio.file.AccessDeniedException e) {
         log.error(e.getMessage(), e);
         return Response.error().code(-1).message(e.getMessage());
     }
@@ -40,7 +41,10 @@ public class UnifiedExceptionHandler {
      * @param e
      * @return
      */
-    @ExceptionHandler(value = {BusinessException.class, BadCredentialsException.class})
+    @ExceptionHandler(value = {BusinessException.class,
+            BadCredentialsException.class,
+            AccessDeniedException.class
+    })
     public Response handleBusinessException(Exception e) {
         log.error(e.getMessage(), e);
         return Response.error().code(e instanceof BusinessException ? ((BusinessException) e).getCode(): 201).message(e.getMessage());

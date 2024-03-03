@@ -1,4 +1,4 @@
-package com.wechat.web.domain;
+package com.wechat.web.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -15,7 +15,7 @@ public class SysUser extends BaseEntity{
 
     /** 用户账号 */
     @TableField(value = "user_name")
-    private String userName;
+    private String username;
 
     /** 用户昵称 */
     private String nickName;

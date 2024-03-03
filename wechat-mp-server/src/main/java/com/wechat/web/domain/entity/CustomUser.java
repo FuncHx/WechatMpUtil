@@ -1,11 +1,8 @@
-package com.wechat.web.domain;
+package com.wechat.web.domain.entity;
 
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 @Data
@@ -35,7 +32,7 @@ public class CustomUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return sysUser.getUserName();
+        return sysUser.getUsername();
     }
 
     @Override

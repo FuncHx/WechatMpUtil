@@ -1,6 +1,5 @@
 package com.wechat.mp;
 
-import com.wechat.web.domain.SysUser;
 import com.wechat.web.service.SysUserService;
 import com.wechat.web.service.impl.UserDetailsServiceImpl;
 import org.junit.jupiter.api.Test;

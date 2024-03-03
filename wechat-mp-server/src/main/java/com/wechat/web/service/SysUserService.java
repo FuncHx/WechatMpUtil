@@ -1,13 +1,12 @@
 package com.wechat.web.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.wechat.web.domain.SysUser;
-import com.wechat.web.mapper.SysUserMapper;
-import org.springframework.stereotype.Service;
+import com.wechat.web.domain.LoginUser;
+import com.wechat.web.domain.entity.SysUser;
 
 public interface SysUserService extends IService<SysUser> {
 
-    String login(SysUser sysUser);
+    String login(LoginUser sysUser);
 
     SysUser register(SysUser sysUser);
 

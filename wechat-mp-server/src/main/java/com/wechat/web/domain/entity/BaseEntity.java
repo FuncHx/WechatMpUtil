@@ -1,4 +1,4 @@
-package com.wechat.web.domain;
+package com.wechat.web.domain.entity;
 
 
 import com.baomidou.mybatisplus.annotation.*;

@@ -1,16 +1,17 @@
 package com.wechat.web.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.wechat.web.domain.CustomUser;
-import com.wechat.web.domain.SysUser;
+import com.wechat.web.domain.LoginUser;
+import com.wechat.web.domain.entity.SysUser;
+import com.wechat.web.except.BusinessException;
 import com.wechat.web.service.SysUserService;
 import com.wechat.web.util.Response;
+import com.wechat.web.util.ResponseEnum;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
+import javax.annotation.Resource;
 import java.util.HashMap;
 
 @RestController
@@ -20,9 +21,10 @@ public class LoginController {
     @Autowired
     private SysUserService userService;
 
+
     @PostMapping("login")
-    public Response login(@RequestBody SysUser sysUser) {
-        String token = userService.login(sysUser);
+    public Response login(@RequestBody LoginUser user) {
+        String token = userService.login(user);
         HashMap result = new HashMap();
         result.put("token", token);
         return Response.ok().data(result);
