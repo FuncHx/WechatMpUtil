@@ -4,71 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="efddcec8-09b0-4e16-8e17-2f82ef322502" name="Changes" comment="重新整理整体项目结构">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_penggle_kaptcha_2_3_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_jhlabs_filters_2_0_235_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_lettuce_lettuce_core_6_1_10_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_buffer_4_1_85_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_4_1_85_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_common_4_1_85_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_handler_4_1_85_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_resolver_4_1_85_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_4_1_85_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_native_unix_common_4_1_85_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_projectreactor_reactor_core_3_4_25.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_reactivestreams_reactive_streams_1_0_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_data_redis_2_7_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_commons_2_7_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_keyvalue_2_7_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_redis_2_7_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_support_5_3_24.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/config/CaptchaConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/config/CorsConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/config/RedisConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/controller/KaptchaController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/domain/LoginUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/domain/entity/SysMenu.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/except/CustomExpressionRoot.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/filter/JwtAuthorizationTokenFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/util/Base64.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/util/RedisUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/util/SpringContextUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wechat/mp/controller/MenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wechat/mp/controller/MenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wechat/web/config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/config/WebSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wechat/web/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wechat/web/domain/BaseEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/domain/entity/BaseEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wechat/web/domain/CustomUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/domain/entity/CustomUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wechat/web/domain/Permission.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wechat/web/domain/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/domain/entity/Role.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wechat/web/domain/SysUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/domain/entity/SysUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wechat/web/except/UnifiedExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/except/UnifiedExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wechat/web/handler/CustomAccessDeniedHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/handler/CustomAccessDeniedHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wechat/web/handler/CustomAuthenticationEntryPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/handler/CustomAuthenticationEntryPoint.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wechat/web/mapper/PermissionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/mapper/SysMenuMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wechat/web/mapper/RoleMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/mapper/RoleMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wechat/web/mapper/SysUserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/mapper/SysUserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wechat/web/service/PermissionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/service/PermissionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wechat/web/service/RoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/service/RoleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wechat/web/service/SysUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/service/SysUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wechat/web/service/impl/PermissionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/service/impl/PermissionServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wechat/web/service/impl/RoleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/service/impl/RoleServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wechat/web/service/impl/SysUserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/service/impl/SysUserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wechat/web/service/impl/UserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/service/impl/UserDetailsServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wechat/web/util/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/util/JwtUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wechat/web/util/ResponseEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wechat/web/util/ResponseEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapping/PermissionMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapping/SysMenuMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/wechat/mp/MpApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/wechat/mp/MpApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../wechat-mp-ui/babel.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../wechat-mp-ui/babel.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../wechat-mp-ui/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../wechat-mp-ui/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../wechat-mp-ui/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../wechat-mp-ui/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../wechat-mp-ui/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../wechat-mp-ui/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../wechat-mp-ui/src/components/HelloWorld.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../wechat-mp-ui/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/../wechat-mp-ui/src/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../wechat-mp-ui/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../wechat-mp-ui/vue.config.js" afterDir="false" />
+    <list default="true" id="efddcec8-09b0-4e16-8e17-2f82ef322502" name="Changes" comment="新增用户验证码登录，以及前端vue项目的功能">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,7 +151,7 @@
       <workItem from="1709206153279" duration="14159000" />
       <workItem from="1709289691569" duration="7198000" />
       <workItem from="1709299459883" duration="7749000" />
-      <workItem from="1709387422250" duration="29751000" />
+      <workItem from="1709387422250" duration="29984000" />
     </task>
     <task id="LOCAL-00001" summary="实现Magic功能会话进行用户授权，并携带用户信息跳转新网页">
       <created>1709133411542</created>
@@ -251,7 +188,8 @@
     <MESSAGE value="实现Magic功能会话进行用户授权，并携带用户信息跳转新网页" />
     <MESSAGE value="实现登录验证并且添加角色权限控制功能" />
     <MESSAGE value="重新整理整体项目结构" />
-    <option name="LAST_COMMIT_MESSAGE" value="重新整理整体项目结构" />
+    <MESSAGE value="新增用户验证码登录，以及前端vue项目的功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="新增用户验证码登录，以及前端vue项目的功能" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
