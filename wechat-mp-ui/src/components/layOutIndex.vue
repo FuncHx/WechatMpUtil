@@ -1,6 +1,6 @@
 <template>
   <el-container  class="operation-wrapper">
-  <el-aside width="auto">Aside</el-aside>
+  <el-aside width="auto"><Aside/></el-aside>
   <el-container>
     <el-header><NavBar/></el-header>
     <el-main><router-view></router-view></el-main>
@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import Aside from './aside.vue';
 
 import NavBar from './NavBar.vue';
 
@@ -16,6 +17,7 @@ export default {
     name: "LayoutIndex",
     components: {
       NavBar,
+      Aside
     },
     data() {
         return {
@@ -49,8 +51,7 @@ export default {
   }
   
   .el-aside {
-    background-color: #D3DCE6;
-    color: #333;
+    background-color: #37373d;
     position: relative;
     height: 100vh;
     width: 150px !important;
