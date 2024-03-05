@@ -4,8 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wechat.web.domain.LoginUser;
 import com.wechat.web.domain.entity.CustomUser;
+import com.wechat.web.domain.entity.Role;
+import com.wechat.web.domain.entity.SysMenu;
 import com.wechat.web.domain.entity.SysUser;
 import com.wechat.web.except.BusinessException;
+import com.wechat.web.mapper.SysMenuMapper;
 import com.wechat.web.mapper.SysUserMapper;
 import com.wechat.web.service.SysUserService;
 import com.wechat.web.util.Assert;
@@ -16,9 +19,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -29,6 +35,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Autowired
     private SysUserMapper sysUserMapper;
+
+    @Autowired
+    private SysMenuMapper sysMenuMapper;
 
     @Autowired
     private RedisUtil redisUtil;
@@ -74,6 +83,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         user.setStatus("1");
         int insert = sysUserMapper.insert(user);
         return user;
+    }
+
+    @Override
+    public CustomUser getUserInfo() {
+        CustomUser customUser = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<SysMenu> sysMenus = sysMenuMapper.selectListMenuInfoByUserId(customUser.getSysUser().getId());
+        System.out.println(sysMenus);
+        List<Role> roles = sysMenuMapper.selectRoleListByUserId(customUser.getSysUser().getId());
+        customUser.getSysUser().getData().put("roles", roles.stream().map(Role::getRoleName));
+        customUser.getSysUser().getData().put("menus", sysMenus);
+        return customUser;
     }
 
 }

@@ -2,6 +2,7 @@ package com.wechat.web.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wechat.web.domain.LoginUser;
+import com.wechat.web.domain.entity.CustomUser;
 import com.wechat.web.domain.entity.SysUser;
 
 public interface SysUserService extends IService<SysUser> {
@@ -10,4 +11,5 @@ public interface SysUserService extends IService<SysUser> {
 
     SysUser register(SysUser sysUser);
 
+    CustomUser getUserInfo();
 }

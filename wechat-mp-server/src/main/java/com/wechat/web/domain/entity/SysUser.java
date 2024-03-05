@@ -2,7 +2,10 @@ package com.wechat.web.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
 
 import java.util.Date;
 
@@ -14,6 +17,7 @@ public class SysUser extends BaseEntity{
 
 
     /** 用户账号 */
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @TableField(value = "user_name")
     private String username;
 
@@ -33,6 +37,7 @@ public class SysUser extends BaseEntity{
     private String avatar;
 
     /** 密码 */
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     /** 帐号状态（0正常 1停用） */
@@ -42,6 +47,7 @@ public class SysUser extends BaseEntity{
     private String delFlag;
 
     /** 最后登录IP */
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String loginIp;
 
     /** 最后登录时间 */

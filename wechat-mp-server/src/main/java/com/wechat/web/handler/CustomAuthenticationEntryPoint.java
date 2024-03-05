@@ -2,7 +2,9 @@ package com.wechat.web.handler;
 
 
 import com.alibaba.fastjson2.JSON;
+import com.wechat.mp.util.JsonUtils;
 import com.wechat.web.except.BusinessException;
+import com.wechat.web.util.Response;
 import com.wechat.web.util.ResponseEnum;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -21,6 +23,7 @@ import java.util.HashMap;
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        throw new BusinessException(ResponseEnum.LOGIN_AUTH_ERROR);
+        response.setContentType("application/json;charset=UTF-8");
+        response.getWriter().write(JsonUtils.toJson(Response.error().data(ResponseEnum.LOGIN_AUTH_ERROR)));
     }
 }

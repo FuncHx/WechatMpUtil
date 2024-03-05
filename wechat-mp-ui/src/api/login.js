@@ -19,7 +19,7 @@ export function login(username, password, code, uuid) {
   // 获取用户详细信息
   export function getInfo() {
     return request({
-      url: '/user/getInfo',
+      url: '/user/userInfo',
       method: 'get'
     })
   }

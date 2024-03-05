@@ -1,7 +1,9 @@
 import axios from 'axios'
-import { getToken } from '@/utils/auth'
-import errorCode from '@/utils/errorCode'
+import { getToken, removeToken } from '@/utils/auth'
+import {errorCode, loginErrorCode} from '@/utils/errorCode'
 import { Notification, MessageBox, Message } from 'element-ui'
+import router from '@/router'
+import store from '@/store'
 
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 // 创建axios实例
@@ -48,16 +50,43 @@ service.interceptors.request.use(config => {
 
 // 响应拦截器
 service.interceptors.response.use(res => {
+  const errorMessage = res.data.message
   // 未设置状态码则默认成功状态
   const code = res.data.code || 200;
-  if (code == 200) {
+  
+  if (code + "" in loginErrorCode) { // 用户登录失效或未登录
+    store.dispatch("user/LogOut").then(() => {
+      location.href = '/login';
+    })
+  }else if (code != 200) {
+    Message({
+      message: errorMessage,
+      type: 'error'
+    })
+    return Promise.reject(errorMessage)
+  }
+  else {
     return res.data
   }
-  const errorMessage = res.data.message
-  Message({
-    message: errorMessage,
-    type: 'error'
-  })
+  
+}, error => {
+  console.log('err' + error)
+    let { message } = error;
+    if (message == "Network Error") {
+      message = "后端接口连接异常";
+    }
+    else if (message.includes("timeout")) {
+      message = "系统接口请求超时";
+    }
+    else if (message.includes("Request failed with status code")) {
+      message = "系统接口" + message.substr(message.length - 3) + "异常";
+    }
+    Message({
+      message: message,
+      type: 'error',
+      duration: 5 * 1000
+    })
+    return Promise.reject(error)
 }
 )
 

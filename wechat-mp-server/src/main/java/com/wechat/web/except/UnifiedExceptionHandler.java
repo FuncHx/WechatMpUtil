@@ -25,8 +25,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 
 @Slf4j
-@Component
-@RestControllerAdvice // 在controller层添加通知。如果使用@ControllerAdvice，则方法上需要添加@ResponseBody
+@RestControllerAdvice
 public class UnifiedExceptionHandler {
 
     @ExceptionHandler(value = java.nio.file.AccessDeniedException.class)

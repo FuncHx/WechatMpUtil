@@ -22,5 +22,5 @@ public class BaseEntity implements Serializable {
     private Date updateTime;
 
     @TableField(exist = false)
-    private Map<String, Object> param = new HashMap<>();
+    private Map<String, Object> data = new HashMap<>();
 }

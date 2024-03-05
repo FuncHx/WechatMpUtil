@@ -14,6 +14,19 @@
         WHERE u.id = #{id}
     </select>
 
+<!--    根据用户ID查询用户所有的菜单名称-->
+    <select id="selectListMenuInfoByUserId" resultType="com.wechat.web.domain.entity.SysMenu">
+        SELECT
+            m.*
+        FROM
+            `sys_user` AS u
+                INNER JOIN user_role_relation AS ur ON u.id = ur.user_id
+                INNER JOIN role AS r ON r.id = ur.role_id
+                INNER JOIN role_menu_relation AS rp ON r.id = rp.role_id
+                INNER JOIN sys_menu as m ON rp.menu_id = m.id
+        WHERE u.id = #{id}
+    </select>
+
     <!-- 根据用户id查询用户属于什么角色-->
     <select id="selectRoleListByUserId" resultType="com.wechat.web.domain.entity.Role">
         SELECT

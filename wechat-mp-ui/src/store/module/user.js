@@ -7,7 +7,8 @@ const user = {
     name: '',
     avatar: '',
     roles: [],
-    permissions: []
+    permissions: [],
+    userInfo: {}
   },
 
   mutations: {
@@ -50,15 +51,16 @@ const user = {
     GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
         getInfo(state.token).then(res => {
-          const user = res.user
+          const user = res.data
           const avatar = user.avatar == "" ? require("@/assets/images/profile.jpg") : process.env.VUE_APP_BASE_API + user.avatar;
-          if (res.roles && res.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-            commit('SET_ROLES', res.roles)
-            commit('SET_PERMISSIONS', res.permissions)
+          console.log(user);
+          if (user.data.roles && user.data.roles > 0) { // 验证返回的roles是否是一个非空数组
+            commit('SET_ROLES', user.data.roles)
+            commit('SET_PERMISSIONS', res.data.menus)
           } else {
             commit('SET_ROLES', ['ROLE_DEFAULT'])
           }
-          commit('SET_NAME', user.userName)
+          commit('SET_NAME', user.nikeName)
           commit('SET_AVATAR', avatar)
           resolve(res)
         }).catch(error => {
@@ -90,7 +92,8 @@ const user = {
         resolve()
       })
     }
-  }
+  },
+  namespaced: true,
 }
 
 export default user

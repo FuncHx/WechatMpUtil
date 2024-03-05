@@ -13,7 +13,9 @@ import com.wechat.web.util.SpringContextUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +23,9 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
+import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
@@ -30,15 +34,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Component
 public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
 
-    @Autowired
     private JwtUtil jwtUtil;
 
-    private SysUserService sysUserService;
-
-    private FilterConfig config;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -50,10 +49,15 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
             try {
                 claim = jwtUtil.parseJWT(token);
             } catch (Exception e) {
-                throw new BusinessException(ResponseEnum.TOKEN_ERROR);
+                request.setAttribute("filter.error", new BusinessException(ResponseEnum.TOKEN_ERROR));
+                //将异常分发到/error/exthrow控制器
+                request.getRequestDispatcher("/error/exthrow").forward(request, response);
             }
             if (claim == null) {
-                throw new JwtException("token 异常");
+                // 异常捕获，发送到error controller
+                request.setAttribute("filter.error", new BusinessException(ResponseEnum.TOKEN_ERROR));
+                //将异常分发到/error/exthrow控制器
+                request.getRequestDispatcher("/error/exthrow").forward(request, response);
             }
             if (null != claim.getSubject() & SecurityContextHolder.getContext().getAuthentication() == null){
                 UserDetails userDetails = userDetailsService.loadUserByUsername(claim.getSubject());

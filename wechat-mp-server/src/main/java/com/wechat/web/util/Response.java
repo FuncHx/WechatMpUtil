@@ -65,6 +65,12 @@ public class Response {
         return this;
     }
 
+    public Response data(ResponseEnum responseEnum){
+        this.code = responseEnum.getCode();
+        this.message = responseEnum.getMessage();
+        return this;
+    }
+
     public Response data(Map<String, Object> map) {
         this.setData(map);
         return this;

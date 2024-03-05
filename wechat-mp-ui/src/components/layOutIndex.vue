@@ -12,6 +12,7 @@
 import Aside from './aside.vue';
 
 import NavBar from './NavBar.vue';
+import { mapState, mapActions } from 'vuex';
 
 export default {
     name: "LayoutIndex",
@@ -23,6 +24,9 @@ export default {
         return {
 
         }
+    },
+    created() {
+      this.$store.dispatch("user/GetInfo")
     }
 }
 </script>
@@ -54,11 +58,14 @@ export default {
     background-color: #37373d;
     position: relative;
     height: 100vh;
-    width: 150px !important;
     .el-menu {
     // 解决侧边栏凸出来的一小块儿白边
         border-right: none;
     }
+  }
+  .el-aside::-webkit-scrollbar {
+    display: none;
+    overflow-y: hidden;
   }
   
 </style>
