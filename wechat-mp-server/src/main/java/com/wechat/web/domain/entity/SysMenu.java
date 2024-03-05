@@ -1,6 +1,10 @@
 package com.wechat.web.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class SysMenu extends BaseEntity {
@@ -44,4 +48,16 @@ public class SysMenu extends BaseEntity {
     备注
      */
     private String remark;
+    /**
+     * 路由路径
+     */
+    private String path;
+    /**
+     * 组件文件路径
+     */
+    private String component;
+
+    /** 子菜单 */
+    @TableField(exist = false)
+    private List<SysMenu> children = new ArrayList<SysMenu>();
 }

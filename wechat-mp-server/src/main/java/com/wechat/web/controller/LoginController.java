@@ -1,17 +1,13 @@
 package com.wechat.web.controller;
 
 
-import com.wechat.web.domain.LoginUser;
+import com.wechat.web.domain.vo.LoginUser;
 import com.wechat.web.domain.entity.SysUser;
-import com.wechat.web.except.BusinessException;
 import com.wechat.web.service.SysUserService;
 import com.wechat.web.util.Response;
-import com.wechat.web.util.ResponseEnum;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 
 @RestController

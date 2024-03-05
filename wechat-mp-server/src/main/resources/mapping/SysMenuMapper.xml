@@ -4,7 +4,7 @@
     <!-- 根据用户id查询用户所有的权限-->
     <select id="selectListByUserId" resultType="com.wechat.web.domain.entity.SysMenu">
         SELECT
-            m.perms
+            m.*
         FROM
             `sys_user` AS u
                 INNER JOIN user_role_relation AS ur ON u.id = ur.user_id

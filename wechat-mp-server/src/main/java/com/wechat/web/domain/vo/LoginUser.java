@@ -1,4 +1,4 @@
-package com.wechat.web.domain;
+package com.wechat.web.domain.vo;
 
 import com.wechat.web.domain.entity.SysUser;
 import lombok.Data;
