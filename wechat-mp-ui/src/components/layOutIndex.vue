@@ -1,6 +1,6 @@
 <template>
   <el-container  class="operation-wrapper">
-  <el-aside width="auto"><Aside/></el-aside>
+  <el-aside width="auto"><Aside :routes="routers"/></el-aside>
   <el-container>
     <el-header><NavBar/></el-header>
     <el-main><router-view></router-view></el-main>
@@ -9,10 +9,10 @@
 </template>
 
 <script>
-import Aside from './aside.vue';
+import Aside from './SideBar';
 
 import NavBar from './NavBar.vue';
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 
 export default {
     name: "LayoutIndex",
@@ -20,14 +20,14 @@ export default {
       NavBar,
       Aside
     },
+    computed: {
+      ...mapGetters(["routers"])
+    },
     data() {
         return {
 
         }
     },
-    created() {
-      this.$store.dispatch("user/GetInfo")
-    }
 }
 </script>
 

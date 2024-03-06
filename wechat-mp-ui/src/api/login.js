@@ -28,11 +28,16 @@ export function login(username, password, code, uuid) {
   export function logout() {
     return request({
       url: '/user/logout',
-      method: 'post'
+      method: 'get'
     })
   }
   
   // 获取验证码
   export function getCodeImg() {
     return request.get("/captchaImage")
+  }
+
+  // 获取菜单信息
+  export function getRouters(){
+    return request.get("/user/getRouters")
   }

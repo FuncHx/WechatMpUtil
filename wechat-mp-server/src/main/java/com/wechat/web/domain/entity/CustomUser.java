@@ -4,9 +4,10 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.util.Collection;
 @Data
-public class CustomUser implements UserDetails {
+public class CustomUser implements UserDetails, Serializable {
 
     /**
      * 用户实体对象，要调取用户信息时直接获取这个实体对象。

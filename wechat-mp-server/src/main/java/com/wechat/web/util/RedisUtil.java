@@ -12,7 +12,6 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Component
-@Order(-1)
 public final class RedisUtil {
 
     @Autowired

@@ -1,5 +1,7 @@
-import { login, logout, getInfo } from '@/api/login'
+import { login, logout, getInfo, getRouters } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
+import store from '..'
+import router from '@/router'
 
 const user = {
   state: {
@@ -8,7 +10,7 @@ const user = {
     avatar: '',
     roles: [],
     permissions: [],
-    userInfo: {}
+    routers: []
   },
 
   mutations: {
@@ -26,6 +28,9 @@ const user = {
     },
     SET_PERMISSIONS: (state, permissions) => {
       state.permissions = permissions
+    },
+    SET_ROUTER: (state, routers) => {
+      state.routers = routers
     }
   },
 
@@ -53,15 +58,26 @@ const user = {
         getInfo(state.token).then(res => {
           const user = res.data
           const avatar = user.avatar == "" ? require("@/assets/images/profile.jpg") : process.env.VUE_APP_BASE_API + user.avatar;
-          console.log(user);
-          if (user.data.roles && user.data.roles > 0) { // 验证返回的roles是否是一个非空数组
+          if (user.data.roles && user.data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
             commit('SET_ROLES', user.data.roles)
-            commit('SET_PERMISSIONS', res.data.menus)
+            commit('SET_PERMISSIONS', user.data.menus)
           } else {
             commit('SET_ROLES', ['ROLE_DEFAULT'])
           }
           commit('SET_NAME', user.nikeName)
           commit('SET_AVATAR', avatar)
+          resolve(res)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+
+    // 获取菜单信息
+    GetRouters({commit, state}){
+      return new Promise((resolve, reject) => {
+        getRouters().then(res => {
+          commit("SET_ROUTER", res.data)
           resolve(res)
         }).catch(error => {
           reject(error)
@@ -77,6 +93,7 @@ const user = {
           commit('SET_ROLES', [])
           commit('SET_PERMISSIONS', [])
           removeToken()
+          router.push("/")
           resolve()
         }).catch(error => {
           reject(error)

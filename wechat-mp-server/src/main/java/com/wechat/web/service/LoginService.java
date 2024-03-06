@@ -6,11 +6,15 @@ import com.wechat.web.domain.entity.CustomUser;
 import com.wechat.web.domain.entity.SysUser;
 import com.wechat.web.util.Response;
 
-public interface SysUserService extends IService<SysUser> {
+public interface LoginService  {
 
-    String login(LoginUser sysUser);
+    Response login(LoginUser sysUser);
 
     SysUser register(SysUser sysUser);
 
     CustomUser getUserInfo();
+
+    Boolean logOut();
+
+    Response getRouters();
 }

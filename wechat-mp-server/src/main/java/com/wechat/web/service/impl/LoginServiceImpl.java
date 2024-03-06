@@ -4,15 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wechat.web.domain.entity.*;
 import com.wechat.web.domain.vo.LoginUser;
+import com.wechat.web.domain.vo.RouterVo;
 import com.wechat.web.except.BusinessException;
 import com.wechat.web.mapper.SysMenuMapper;
 import com.wechat.web.mapper.SysUserMapper;
 import com.wechat.web.service.SysMenuService;
-import com.wechat.web.service.SysUserService;
-import com.wechat.web.util.Assert;
-import com.wechat.web.util.JwtUtil;
-import com.wechat.web.util.RedisUtil;
-import com.wechat.web.util.ResponseEnum;
+import com.wechat.web.service.LoginService;
+import com.wechat.web.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,11 +19,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.Timer;
 
 @Service
-public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
+public class LoginServiceImpl implements LoginService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -42,8 +42,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Autowired
     private SysMenuService sysMenuService;
 
+    /**
+     * 用户登录
+     * @param sysUser
+     * @return
+     */
     @Override
-    public String login(LoginUser sysUser) {
+    public Response login(LoginUser sysUser) {
         Object o = redisUtil.get(sysUser.getUuid());
         System.out.println(redisUtil.get(sysUser.getUuid()));
         // 验证码逻辑判断
@@ -59,12 +64,26 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         CustomUser loginUser = (CustomUser) authenticate.getPrincipal();
         String username = loginUser.getSysUser().getUsername();
         String token = JwtUtil.createJWT(username);
-        return token;
+        // 将用户信息保存到redis当中
+        redisUtil.set("login"+ loginUser.getUsername(), loginUser);
+        redisUtil.expire("login"+ loginUser.getUsername(), 60 * 60 * 24);
+        HashMap result = new HashMap();
+        result.put("token", token);
+        Response data = Response.ok().data(result);
+        return data;
     }
+
+
+
 
     @Autowired
     private PasswordEncoder bCryptPasswordEncoder;
 
+    /**
+     * 用户注册
+     * @param sysUser
+     * @return
+     */
     @Override
     public SysUser register(SysUser sysUser) {
         // 验证用户是否已经存在
@@ -97,6 +116,24 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         List<SysMenu> routerVos = sysMenuService.selectMenuTreeByUserId(customUser.getSysUser().getId());
         customUser.getSysUser().getData().put("menus", routerVos);
         return customUser;
+    }
+
+    @Override
+    public Boolean logOut() {
+        CustomUser customUser = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        try {
+            redisUtil.del("login" + customUser.getUsername());
+            return true;
+        }catch (Exception E){
+            throw new BusinessException(ResponseEnum.LOGOUT_ERROR);
+        }
+    }
+
+    @Override
+    public Response getRouters() {
+        CustomUser principal = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<RouterVo> routerVos = sysMenuService.buildMenus(sysMenuService.selectMenuTreeByUserId(principal.getSysUser().getId()));
+        return Response.ok().data(routerVos);
     }
 
 }

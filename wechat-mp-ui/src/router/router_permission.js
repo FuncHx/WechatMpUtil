@@ -17,23 +17,21 @@ router.beforeEach((to, from, next) => {
         next({ path: '/' })
         // NProgress.done()
       } else {
-        if (JSON.stringify(store.getters.userInfo) == "{}") {
-          // 判断当前用户是否已拉取完user_info信息
-          // store.dispatch('user/GetInfo').then(res => {
-          //   // 拉取user_info
-          //   const roles = res.roles
-          //   store.dispatch('GenerateRoutes', { roles }).then(accessRoutes => {
-          //     // 根据roles权限生成可访问的路由表
-          //     router.addRoutes(accessRoutes) // 动态添加可访问路由表
-          //     next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
+        if (store.getters.roles.length === 0) { // 判断用户是否已经获取user_info信息
+          store.dispatch("user/GetInfo").then(res => {
+            console.log(store);
+            store.dispatch('GenerateRoutes').then(accessRoutes => {
+              // 根据roles权限生成可访问的路由表
+              router.addRoutes(accessRoutes) // 动态添加可访问路由表
+              next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
+            })
+          })
+          // .catch(err => {
+          //   store.dispatch('user/LogOut').then(() => {
+          //     Message.error(err)
+          //     next({ path: '/' })
           //   })
           // })
-          // .catch(err => {
-          //     store.dispatch('LogOut').then(() => {
-          //       Message.error(err)
-          //       next({ path: '/' })
-          //     })
-          //   })
           next()
         } else {
           next()

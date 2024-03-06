@@ -3,7 +3,7 @@ package com.wechat.mp;
 import com.wechat.mp.util.JsonUtils;
 import com.wechat.web.domain.entity.SysMenu;
 import com.wechat.web.service.SysMenuService;
-import com.wechat.web.service.SysUserService;
+import com.wechat.web.service.LoginService;
 import com.wechat.web.service.impl.UserDetailsServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import java.util.List;
 class MpApplicationTests {
 
     @Autowired
-    private SysUserService sysUserService;
+    private LoginService sysUserService;
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;

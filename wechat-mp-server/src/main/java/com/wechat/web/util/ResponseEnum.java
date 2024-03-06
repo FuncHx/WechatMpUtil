@@ -21,7 +21,11 @@ public enum ResponseEnum {
     CODE_ERROR_TIME_OUT(208, "验证码已过期！"),
     LOGIN_PASSWORD_ERROR(209, "密码错误"),
     LOGIN_LOKED_ERROR(210, "用户被锁定"),
-    LOGIN_AUTH_ERROR(211, "未登录");
+    LOGIN_AUTH_ERROR(211, "未登录"),
+    LOGOUT_ERROR(211, "退出登录异常，请联系管理员！")
+    ;
+
+
 
     /**
      * 状态码
