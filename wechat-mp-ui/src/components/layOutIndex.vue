@@ -23,11 +23,9 @@ export default {
     computed: {
       ...mapGetters(["routers"])
     },
-    data() {
-        return {
-
-        }
-    },
+    created(){
+      console.log(this.$router);
+    }
 }
 </script>
 
@@ -40,12 +38,13 @@ export default {
   .operation-wrapper {
     width: 100% !important;
     .el-header {
-      // height: 100px;
+      box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.3);
       padding: 0;
     }
     .el-aside {
       height: 100vh;
       overflow-y: auto;
+      box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.3);
     }
     .el-main {
       padding: 0px 16px !important;
@@ -55,7 +54,6 @@ export default {
   }
   
   .el-aside {
-    background-color: #37373d;
     position: relative;
     height: 100vh;
     .el-menu {

@@ -26,7 +26,7 @@ const permission = {
             const rdata = JSON.parse(JSON.stringify(res.data))
             const sidebarRoutes = filterAsyncRouter(sdata)
             const rewriteRoutes = filterAsyncRouter(rdata, true)
-            rewriteRoutes.push({ path: '*', redirect: '/404', hidden: true })
+            rewriteRoutes.push({ path: '*', redirect: '/404', hidden: true, meta: {icon: "", title: ""} })
             commit('SET_ROUTES', rewriteRoutes)
             commit('SET_SIDEBAR_ROUTERS', sidebarRoutes)
             resolve(rewriteRoutes)
