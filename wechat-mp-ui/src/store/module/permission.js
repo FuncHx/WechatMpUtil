@@ -1,5 +1,6 @@
 import { getRouters } from "@/api/login"
-import { constantRoutes } from '@/router'
+import router, { constantRoutes } from '@/router'
+import layOutIndex from "@/components/layOutIndex.vue"
 
 const permission = {
     state: {
@@ -26,6 +27,7 @@ const permission = {
             const rdata = JSON.parse(JSON.stringify(res.data))
             const sidebarRoutes = filterAsyncRouter(sdata)
             const rewriteRoutes = filterAsyncRouter(rdata, true)
+            rewriteRoutes.unshift(constantRoutes[0])
             rewriteRoutes.push({ path: '*', redirect: '/404', hidden: true, meta: {icon: "", title: ""} })
             commit('SET_ROUTES', rewriteRoutes)
             commit('SET_SIDEBAR_ROUTERS', sidebarRoutes)
@@ -44,8 +46,8 @@ const permission = {
       }
       if (route.component) {
         // Layout ParentView 组件特殊处理
-        if (route.component === 'Layout') {
-          route.component = Layout
+        if (route.component === 'LayoutIndex') {
+          route.component = layOutIndex
         } else if (route.component === 'ParentView') {
           route.component = ParentView
         } else {

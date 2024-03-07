@@ -23,7 +23,7 @@ export default {
 <style>
 .icon {
   vertical-align: -0.15em;
-  fill: currentColor;
+  fill: "currentColor";
   overflow: hidden;
 }
 </style>

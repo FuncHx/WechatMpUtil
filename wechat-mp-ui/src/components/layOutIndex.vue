@@ -11,7 +11,7 @@
 <script>
 import Aside from './SideBar';
 
-import NavBar from './NavBar.vue';
+import NavBar from './navbar';
 import { mapState, mapActions, mapGetters } from 'vuex';
 
 export default {
@@ -33,6 +33,8 @@ export default {
   .el-header {
     text-align: center;
     padding: 0 !important;
+    height: 50px !important;
+    line-height: 50px;
   }
 
   .operation-wrapper {
