@@ -54,7 +54,7 @@ public class LoginServiceImpl implements LoginService {
         // 验证码逻辑判断
         if (Objects.isNull(o)) {
             throw new BusinessException(ResponseEnum.CODE_ERROR_TIME_OUT);
-        }else if (!sysUser.getCode().equals("test")) {
+        }else if (!sysUser.getCode().equals(o.toString())) {
             throw new BusinessException(ResponseEnum.CODE_ERROR);
         }
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(sysUser.getUsername(), sysUser.getPassword());

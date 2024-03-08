@@ -6,9 +6,6 @@
 
 <script>
 export default {
-  created() {
-    console.log("fdsafdsa");
-  }
 }
 </script>
 

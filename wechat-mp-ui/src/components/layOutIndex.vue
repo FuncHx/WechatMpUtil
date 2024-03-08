@@ -23,9 +23,6 @@ export default {
     computed: {
       ...mapGetters(["routers"])
     },
-    created(){
-      console.log(this.$router);
-    }
 }
 </script>
 

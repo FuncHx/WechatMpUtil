@@ -1,6 +1,5 @@
 import { login, logout, getInfo, getRouters } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
-import store from '..'
 import router from '@/router'
 
 const user = {
@@ -10,7 +9,8 @@ const user = {
     avatar: '',
     roles: [],
     permissions: [],
-    routers: []
+    routers: [],
+    userInfo: {}
   },
 
   mutations: {
@@ -31,6 +31,9 @@ const user = {
     },
     SET_ROUTER: (state, routers) => {
       state.routers = routers
+    },
+    SET_USER_INFOO: (state, userInfo) => {
+      state.userInfo = userInfo
     }
   },
 
@@ -57,6 +60,7 @@ const user = {
       return new Promise((resolve, reject) => {
         getInfo(state.token).then(res => {
           const user = res.data
+          
           const avatar = user.avatar == "" ? require("@/assets/images/profile.jpg") : user.avatar;
           if (user.data.roles && user.data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
             commit('SET_ROLES', user.data.roles)
@@ -66,6 +70,7 @@ const user = {
           }
           commit('SET_NAME', user.nikeName)
           commit('SET_AVATAR', avatar)
+          commit("SET_USER_INFOO", res.data)
           resolve(res)
         }).catch(error => {
           reject(error)
@@ -93,7 +98,7 @@ const user = {
           commit('SET_ROLES', [])
           commit('SET_PERMISSIONS', [])
           removeToken()
-          router.push("/")
+          router.push({path: "/login"})
           resolve()
         }).catch(error => {
           reject(error)

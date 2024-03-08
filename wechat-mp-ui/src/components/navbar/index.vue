@@ -1,19 +1,24 @@
 <template>
   <div class="navbar">
-    <div class="menu-button" @click="handClickMenu()">
+    <div class="menu-button" @click="sideBar.opened = !sideBar.opened ">
       <span class="iconfont" :class="{'is-active':sideBar.opened}">&#xe643;</span>
     </div>
     <Breadcrumb/>
     <div class="navbar-right">
-      <el-dropdown class="avatar-container">
+      <el-dropdown 
+      class="avatar-container" 
+      trigger="click"
+      placement="top">
       <span class="el-dropdown-link">
         <!-- <el-avatar shape="square" :size="'large'" src="@/assets/images/profile.jpg"></el-avatar> -->
         <div class="avatar-wrapper">
           <img src="@/assets/images/profile.jpg" class="user-avatar">
         </div>
       </span>
-      <el-dropdown-menu slot="dropdown" >
-        <el-dropdown-item icon="el-icon-setting">黄金糕</el-dropdown-item>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item icon="el-icon-edit" @click.native="$router.push({name: 'userInfo'})">个人信息</el-dropdown-item>
+        <el-dropdown-item icon="el-icon-setting">系统设置</el-dropdown-item>
+        <el-dropdown-item icon="el-icon-switch-button" @click.native="LogOut()">退出登录</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
     </div>
@@ -21,24 +26,18 @@
 </template>
 
 <script>
-import  Breadcrumb  from './breadcrumb.vue'
-import { mapGetters, mapState } from 'vuex'
+import  Breadcrumb  from '../Breadcrumb'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   components: {
     Breadcrumb
   },
   computed: {
     ...mapGetters(["sideBar"]),
-    ...mapState(["user"])
   },
   methods: {
-    handClickMenu() {
-      this.sideBar.opened = !this.sideBar.opened 
-    }
+    ...mapActions("user", ["LogOut"]),
   },
-  created() {
-    console.log(this.user);
-  }
 }
 </script>
 
@@ -94,26 +93,19 @@ export default {
 
     .avatar-container {
       margin-right: 30px;
-
       .avatar-wrapper {
         margin-top: 5px;
         position: relative;
-
         .user-avatar {
           cursor: pointer;
           width: 40px;
           height: 40px;
           border-radius: 10px;
         }
-
-        .el-icon-caret-bottom {
-          cursor: pointer;
-          position: absolute;
-          right: -20px;
-          top: 25px;
-          font-size: 12px;
-        }
       }
+    }
+    .el-dropdown-menu {
+      margin: 0 !important;
     }
     
 </style>

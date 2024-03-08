@@ -10,13 +10,27 @@ export const constantRoutes = [
     path: '',
     component: LayoutIndex,
     redirect: 'index',
-    name: 'index',
+    name: "首页",
     meta: {title: '首页', icon: 'shouye', noCache: true,},
     children: [
       {
         path: 'index',
+        name: 'index',
         component: (resolve) => require(['@/views/index'], resolve),
-        meta: { title: '首页', icon: 'dashboard', noCache: true, affix: true }
+      }
+    ]
+  },
+  {
+    path: '',
+    component: LayoutIndex,
+    redirect: 'userInfo',
+    name: "用户信息",
+    meta: {title: '用户信息', icon: 'shouye', noCache: true,},
+    children: [
+      {
+        path: "userInfo",
+        name: "userInfo",
+        component: (resolve) => require(["@/views/userInfo"],resolve)
       }
     ]
   },
