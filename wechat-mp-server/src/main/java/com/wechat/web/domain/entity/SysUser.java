@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -54,4 +55,9 @@ public class SysUser extends BaseEntity{
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date loginDate;
 
+    @TableField(exist = false)
+    private ArrayList<String> permission;
+
+    @TableField(exist = false)
+    private ArrayList<String> roles;
 }

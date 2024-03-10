@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import {editPassword} from "@/api/user"
 export default {
     data () {
         return {
@@ -41,7 +42,14 @@ export default {
                     this.$message({type: "error", message: "两次密码不一致！"})
                     return false
                 }
-                console.log(this.form);
+                editPassword(this.form).then(res => {
+                    if (res.code == 200) {
+                        this.$message({type: "success", message: "修改成功！"})
+                        this.$store.dispatch("user/LogOut")
+                    }else{
+                        this.$message({type: "error", message: "修改失败！请联系管理员"})
+                    }
+                }).catch(() => {})
             } else {
                 return false;
             }

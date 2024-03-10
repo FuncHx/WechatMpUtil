@@ -60,13 +60,13 @@ const user = {
       return new Promise((resolve, reject) => {
         getInfo(state.token).then(res => {
           const user = res.data
-          
+          console.log(user)
           const avatar = user.avatar == "" ? require("@/assets/images/profile.jpg") : user.avatar;
           if (user.data.roles && user.data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-            commit('SET_ROLES', user.data.roles)
+            commit('SET_ROLES', user.roles)
             commit('SET_PERMISSIONS', user.data.menus)
           } else {
-            commit('SET_ROLES', ['ROLE_DEFAULT'])
+            commit('SET_ROLES', ["普通角色"])
           }
           commit('SET_NAME', user.nikeName)
           commit('SET_AVATAR', avatar)
@@ -113,7 +113,8 @@ const user = {
         removeToken()
         resolve()
       })
-    }
+    },
+    
   },
   namespaced: true,
 }

@@ -1,4 +1,4 @@
-package com.wechat.web.except;
+package com.wechat.web.expression;
 
 
 import com.wechat.web.domain.entity.CustomUser;
@@ -13,7 +13,7 @@ public class CustomExpressionRoot {
     public boolean hasAuth(String authority) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUser principal = (CustomUser) authentication.getPrincipal();
-        return authentication.getAuthorities().contains(new SimpleGrantedAuthority(authority));
+        return principal.getSysUser().getPermission().contains(authority);
     }
 
 }

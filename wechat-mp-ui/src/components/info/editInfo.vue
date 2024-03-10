@@ -30,10 +30,12 @@
 
 <script>
 import { mapState } from 'vuex';
+import { updateUserInfo } from '@/api/user';
 export default {
     data () {
         return {
             form: {
+                id: null,
                 nickName: "",
                 phonenumber: "",
                 email: "",
@@ -45,11 +47,20 @@ export default {
         ...mapState("user", ["userInfo"])
     },
     created() {
+        console.log(this.userInfo);
         this.form = JSON.parse(JSON.stringify(this.userInfo))
     },
     methods: {
         submitForm() {
-            console.log(this.form);
+            updateUserInfo(this.form).then(res => {
+                if (res.code == 200){
+                    this.$message({type: "success", message: "修改成功"})
+                    this.$store.dispatch("user/GetUserInfo")
+                    window.location.reload();
+                }else{
+                    this.$message({type: "error", message: res.message})
+                }
+            }).catch(error => {})
         },
     }
 }

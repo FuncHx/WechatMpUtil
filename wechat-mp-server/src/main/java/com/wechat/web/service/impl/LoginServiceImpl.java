@@ -112,9 +112,7 @@ public class LoginServiceImpl implements LoginService {
     public CustomUser getUserInfo() {
         CustomUser customUser = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<Role> roles = sysMenuMapper.selectRoleListByUserId(customUser.getSysUser().getId());
-        customUser.getSysUser().getData().put("roles", roles.stream().map(Role::getRoleName));
-        List<SysMenu> routerVos = sysMenuService.selectMenuTreeByUserId(customUser.getSysUser().getId());
-        customUser.getSysUser().getData().put("menus", routerVos);
+        customUser.getSysUser().getData().put("roles", roles.stream().map(Role::getRole));
         return customUser;
     }
 

@@ -24,7 +24,7 @@ import java.util.Map;
 @Component
 public class ImageHandler implements WxMpMessageHandler {
 
-    @Value("${img.path}")
+    @Value("${file.uploadFolder}")
     private String filePath;
 
     @Override

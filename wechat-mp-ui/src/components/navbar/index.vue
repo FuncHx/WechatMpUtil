@@ -12,7 +12,7 @@
       <span class="el-dropdown-link">
         <!-- <el-avatar shape="square" :size="'large'" src="@/assets/images/profile.jpg"></el-avatar> -->
         <div class="avatar-wrapper">
-          <img src="@/assets/images/profile.jpg" class="user-avatar">
+          <img :src="avatar" class="user-avatar">
         </div>
       </span>
       <el-dropdown-menu slot="dropdown">
@@ -33,7 +33,7 @@ export default {
     Breadcrumb
   },
   computed: {
-    ...mapGetters(["sideBar"]),
+    ...mapGetters(["sideBar", "avatar"]),
   },
   methods: {
     ...mapActions("user", ["LogOut"]),

@@ -25,33 +25,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.session.SessionManagementFilter;
 
 @Configuration
-@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfig {
-
-    /*
-    权限不足处理器
-     */
-    @Autowired
-    private CustomAccessDeniedHandler customAccessDeniedHandler;
-
-    /*
-    登录失效处理器
-     */
-    @Autowired
-    private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
-
-    /*
-    登出成功处理器
-     */
-    @Autowired
-    private CustomLogoutSuccessHandler customLogoutSuccessHandler;
-
-    /**
-     * Jwt过滤器
-     */
-
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -62,13 +37,8 @@ public class WebSecurityConfig {
                         .antMatchers("/captchaImage").anonymous()
                         .anyRequest().authenticated();
 
-        http.addFilterBefore(new JwtAuthorizationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-        // 用户登出成功时的处理
-        http.logout().logoutSuccessHandler(customLogoutSuccessHandler);
-        // 无权访问处理
-        http.exceptionHandling().accessDeniedHandler(customAccessDeniedHandler);
         // 用户登录失效的处理
-        http.exceptionHandling().authenticationEntryPoint(customAuthenticationEntryPoint);
+        http.addFilterBefore(new JwtAuthorizationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
@@ -90,7 +60,8 @@ public class WebSecurityConfig {
                     "/webjars/**",
                     "/v2/**",
                     "/swagger-ui.html/**",
-                    "/doc.html");
+                    "/doc.html",
+                    "/static/**");
         };
 
     }

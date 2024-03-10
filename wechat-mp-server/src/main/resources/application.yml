@@ -6,7 +6,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/wechat_mp?characterEncoding=utf8&serverTimezone=UTC
     username: root
-    password: 123123
+    password: cyh0110
     type: com.alibaba.druid.pool.DruidDataSource
   thymeleaf:
     cache: false
@@ -31,8 +31,6 @@ wx:
 mybatis:
   type-aliases-package: com.wechat.web.domain
 
-img:
-  path: D:\images\
 mybatis-plus:
   mapper-locations: classpath*:mapping/*.xml
   type-aliases-package: com.wechat.web.domain
@@ -40,3 +38,10 @@ mybatis-plus:
 
 jwt:
   key: cyh
+
+
+file:
+  ###静态资源对外暴露的访问路径
+  staticAccessPath: /static/**
+  ###静态资源实际存储路径
+  uploadFolder: D:\staticResource\upload\
