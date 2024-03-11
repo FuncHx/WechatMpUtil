@@ -1,11 +1,131 @@
 <template>
   <div>
-    <h1>菜单管理</h1>
+    
+    <el-form :inline="true" size="mini" :model="form" class="demo-form-inline">
+        <el-form-item label="菜单名称">
+            <el-input clearable v-model="form.menuName" placeholder="菜单名称"></el-input>
+        </el-form-item>
+        <el-form-item label="状态">
+            <el-select clearable  v-model="form.status" placeholder="状态">
+              <el-option label="正常" value="0"></el-option>
+              <el-option label="禁用" value="1"></el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item>
+            <el-button type="primary" @click="onSubmit">查询</el-button>
+        </el-form-item>
+    </el-form>
+
+    <el-table
+    :data="menus"
+    style="width: 100%;margin-bottom: 20px;"
+    row-key="id"
+    size="medium"
+    default-expand-all
+    :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
+      <el-table-column
+        prop="orderNum"
+        label="序号"
+        sortable
+        width="100">
+      </el-table-column>
+      <el-table-column
+        prop="menuName"
+        label="菜单名称"
+        width="150"
+        sortable>
+      </el-table-column>
+
+      <el-table-column
+        prop="menuType"
+        label="菜单类型"
+        width="100">
+        <template slot-scope="scope">
+            <span>{{ scope.row.menuType === "M"? "目录": scope.row.menuType==="C" ? "菜单": "按钮" }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column
+        prop="perms"
+        label="权限标识"
+        width="180">
+      </el-table-column>
+
+      <el-table-column
+        prop="icon"
+        label="菜单图标"
+        width="120">
+        <template slot-scope="scope">
+          <Icon :icon="scope.row.icon" style="margin-right: 15px;" :size="'20'"/>
+        </template>
+      </el-table-column>
+
+      <el-table-column
+        prop="status"
+        label="菜单状态"
+        width="100">
+      </el-table-column>
+
+      <el-table-column
+        prop="component"
+        label="组件名称">
+      </el-table-column>
+
+      <el-table-column
+        prop="path"
+        label="路由地址">
+      </el-table-column>
+
+      <el-table-column label="操作">
+      <template slot-scope="scope">
+        <el-button
+          size="mini"
+          @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+        <el-button
+          size="mini"
+          type="danger"
+          @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+      </template>
+    </el-table-column>
+
+    </el-table>
   </div>
 </template>
 
 <script>
+import SearchForm from "@/components/searchForm"
+import { mapState } from "vuex";
+import Icon from "@/components/util/icon.vue"
 export default {
+  components: {
+    SearchForm,
+    Icon
+  },
+  computed: {
+    ...mapState("menu", ["menus"])
+  },
+  data() {
+    return {
+        form: {
+          menuName: "",
+          status: ""
+        }
+      }
+  },
+  created() {
+    this.onSubmit()
+  },
+  methods: {
+    onSubmit() {
+      this.$store.dispatch("menu/GetMenus", this.form);
+    },
+    handleEdit(index, row) {
+
+    },
+    handleDelete(index, row) {
+
+    }
+  }
 }
 </script>
 

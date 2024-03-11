@@ -73,9 +73,6 @@ public class LoginServiceImpl implements LoginService {
         return data;
     }
 
-
-
-
     @Autowired
     private PasswordEncoder bCryptPasswordEncoder;
 

@@ -16,4 +16,5 @@ public interface SysMenuService extends IService<SysMenu> {
 
     List<SysMenu> selectMenuTreeByUserId(Integer userId);
 
+    List<SysMenu> selectMenuTree(SysMenu sysMenu);
 }

@@ -1,5 +1,6 @@
 package com.wechat.web.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.thoughtworks.xstream.core.SecurityUtils;
 import com.wechat.web.constants.CustomConstants;
@@ -10,6 +11,7 @@ import com.wechat.web.domain.vo.RouterVo;
 import com.wechat.web.mapper.SysMenuMapper;
 import com.wechat.web.service.SysMenuService;
 import jdk.nashorn.internal.ir.IdentNode;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,17 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         List<SysMenu> menus = null;
         menus = sysMenuMapper.selectListByUserId(userId);
         return getChildPerms(menus, 0);
+    }
+
+    @Override
+    public List<SysMenu> selectMenuTree(SysMenu sysMenu) {
+        System.out.println(sysMenu);
+        QueryWrapper<SysMenu> sysMenuQueryWrapper = new QueryWrapper<>();
+        sysMenuQueryWrapper.like(!ObjectUtils.isEmpty(sysMenu.getMenuName()), "menu_name", sysMenu.getMenuName());
+        sysMenuQueryWrapper.eq(!ObjectUtils.isEmpty(sysMenu.getStatus()), "status", sysMenu.getStatus());
+        List<SysMenu> sysMenus = sysMenuMapper.selectList(sysMenuQueryWrapper);
+        System.out.println(sysMenus);
+        return this.buildMenuTree(sysMenus);
     }
 
     /**

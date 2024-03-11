@@ -49,6 +49,9 @@ export default {
       padding: 0px 16px !important;
       height: calc(100vh - 200px); 
       overflow-y: auto;
+      >div {
+        padding: 20px;
+      }
     }
   }
   

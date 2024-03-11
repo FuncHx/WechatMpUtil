@@ -7,7 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-@Component("xh")
+@Component("hx")
 public class CustomExpressionRoot {
 
     public boolean hasAuth(String authority) {
