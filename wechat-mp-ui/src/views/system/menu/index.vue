@@ -1,18 +1,19 @@
 <template>
   <div>
     
-    <el-form :inline="true" size="mini" :model="form" class="demo-form-inline">
+    <el-form :inline="true" size="mini" :model="searchForm" class="demo-form-inline">
         <el-form-item label="菜单名称">
-            <el-input clearable v-model="form.menuName" placeholder="菜单名称"></el-input>
+            <el-input clearable v-model="searchForm.menuName" placeholder="菜单名称"></el-input>
         </el-form-item>
         <el-form-item label="状态">
-            <el-select clearable  v-model="form.status" placeholder="状态">
+            <el-select clearable  v-model="searchForm.status" placeholder="状态">
               <el-option label="正常" value="0"></el-option>
               <el-option label="禁用" value="1"></el-option>
             </el-select>
         </el-form-item>
         <el-form-item>
             <el-button type="primary" @click="onSubmit">查询</el-button>
+            <el-button type="primary" plain @click="open = true">新增</el-button>
         </el-form-item>
     </el-form>
 
@@ -89,24 +90,41 @@
     </el-table-column>
 
     </el-table>
+    <MenuForm :open="open" :form="form" :type="formType" @handleClose="handleClose()"/>
   </div>
 </template>
 
 <script>
-import SearchForm from "@/components/searchForm"
 import { mapState } from "vuex";
+import MenuForm from "@/components/menuForm"
 import Icon from "@/components/util/icon.vue"
 export default {
   components: {
-    SearchForm,
-    Icon
+    Icon,
+    MenuForm
   },
   computed: {
     ...mapState("menu", ["menus"])
   },
   data() {
     return {
+        open: false,
         form: {
+          component: "",
+          icon: "",
+          menuName: "",
+          id: null,
+          menuType: "",
+          orderNum: null,
+          parentId: 0,
+          path: "",
+          perms: "",
+          remark: "",
+          status: "",
+          visible: ""
+        },
+        formType: 'add',
+        searchForm: {
           menuName: "",
           status: ""
         }
@@ -117,13 +135,16 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$store.dispatch("menu/GetMenus", this.form);
+      this.$store.dispatch("menu/GetMenus", this.searchForm);
     },
     handleEdit(index, row) {
 
     },
     handleDelete(index, row) {
 
+    },
+    handleClose() {
+      this.open = false
     }
   }
 }

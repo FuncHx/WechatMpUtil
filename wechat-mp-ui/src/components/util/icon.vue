@@ -16,7 +16,7 @@ export default {
             type: String,
             default: "1.7em"
         }
-    },
+    }
 }
 </script>
 
