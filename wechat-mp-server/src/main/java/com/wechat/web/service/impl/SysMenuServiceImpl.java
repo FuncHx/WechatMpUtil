@@ -45,12 +45,10 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Override
     public List<SysMenu> selectMenuTree(SysMenu sysMenu) {
-        System.out.println(sysMenu);
         QueryWrapper<SysMenu> sysMenuQueryWrapper = new QueryWrapper<>();
         sysMenuQueryWrapper.like(!ObjectUtils.isEmpty(sysMenu.getMenuName()), "menu_name", sysMenu.getMenuName());
         sysMenuQueryWrapper.eq(!ObjectUtils.isEmpty(sysMenu.getStatus()), "status", sysMenu.getStatus());
         List<SysMenu> sysMenus = sysMenuMapper.selectList(sysMenuQueryWrapper);
-        System.out.println(sysMenus);
         return this.buildMenuTree(sysMenus);
     }
 

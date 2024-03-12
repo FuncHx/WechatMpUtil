@@ -13,7 +13,7 @@
         </el-form-item>
         <el-form-item>
             <el-button type="primary" @click="onSubmit">查询</el-button>
-            <el-button type="primary" plain @click="open = true">新增</el-button>
+            <el-button type="primary" plain @click="open = true; formType='add'">新增</el-button>
         </el-form-item>
     </el-form>
 
@@ -90,7 +90,7 @@
     </el-table-column>
 
     </el-table>
-    <MenuForm :open="open" :form="form" :type="formType" @handleClose="handleClose()"/>
+    <MenuForm :open="open" :form="form" :formType="formType" @close="handleClose"/>
   </div>
 </template>
 
@@ -98,13 +98,15 @@
 import { mapState } from "vuex";
 import MenuForm from "@/components/menuForm"
 import Icon from "@/components/util/icon.vue"
+import {deleteMenu} from "@/api/menu"
 export default {
   components: {
     Icon,
     MenuForm
   },
   computed: {
-    ...mapState("menu", ["menus"])
+    ...mapState("menu", ["menus"]),
+
   },
   data() {
     return {
@@ -120,8 +122,8 @@ export default {
           path: "",
           perms: "",
           remark: "",
-          status: "",
-          visible: ""
+          status: "0",
+          visible: "0"
         },
         formType: 'add',
         searchForm: {
@@ -138,13 +140,46 @@ export default {
       this.$store.dispatch("menu/GetMenus", this.searchForm);
     },
     handleEdit(index, row) {
-
+      this.form = row
+      this.formType = "edit"
+      this.open = true
     },
     handleDelete(index, row) {
 
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          deleteMenu(row.id).then(res => {
+            this.$message({type: res.code === 200 ? "success":"error", message: res.message})
+            if (res.code === 200) {
+              this.$router.go(0)
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
     },
     handleClose() {
       this.open = false
+      this.form = {
+          component: "",
+          icon: "",
+          menuName: "",
+          id: null,
+          menuType: "",
+          orderNum: null,
+          parentId: 0,
+          path: "",
+          perms: "",
+          remark: "",
+          status: "0",
+          visible: "0"
+        }
     }
   }
 }

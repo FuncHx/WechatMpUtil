@@ -1,8 +1,8 @@
 <template>
   <div>
     <!-- 添加或修改菜单对话框 -->
-    <el-dialog :title="formType=='add'? '新增菜单':'修改菜单'" :visible.sync="open" width="600px" :close="close()" append-to-body>
-      <el-form ref="form" :model="form"  label-width="80px">
+    <el-dialog :title="formType==='add'? '新增菜单':'修改菜单'" :visible.sync="open" width="600px" :before-close="close" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules"  label-width="80px">
         <el-row>
           <el-col :span="24">
             <el-form-item label="上级菜单">
@@ -34,14 +34,7 @@
               >
                 <IconSelect ref="iconSelect" @selected="selected" />
                 <el-input slot="reference" v-model="form.icon" placeholder="点击选择图标" readonly>
-                  <svg-icon
-                    v-if="form.icon"
-                    slot="prefix"
-                    :icon-class="form.icon"
-                    class="el-input__icon"
-                    style="height: 32px;width: 16px;"
-                  />
-                  <i v-else slot="prefix" class="el-icon-search el-input__icon" />
+                  <Icon slot="prefix" :icon="form.icon" :size="'20px'" />
                 </el-input>
               </el-popover>
             </el-form-item>
@@ -74,24 +67,16 @@
           <el-col :span="12">
             <el-form-item v-if="form.menuType != 'F'" label="显示状态">
               <el-radio-group v-model="form.visible">
-                <el-radio key="0" label="显示"></el-radio>
-                <el-radio key="1"  label="隐藏"></el-radio>
+                <el-radio label="0">显示</el-radio>
+                <el-radio label="1">隐藏</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item v-if="form.menuType != 'F'" label="菜单状态">
               <el-radio-group v-model="form.status">
-                <el-radio key="0" label="正常"></el-radio>
-                <el-radio key="1"  label="禁用"></el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item v-if="form.menuType == 'C'" label="是否缓存">
-              <el-radio-group v-model="form.isCache">
-                <el-radio label="0">缓存</el-radio>
-                <el-radio label="1">不缓存</el-radio>
+                <el-radio label="0">正常</el-radio>
+                <el-radio label="1">禁用</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -109,12 +94,25 @@
 import request from "@/utils/request"
 import Treeselect from "@riophae/vue-treeselect";
 import IconSelect from "@/components/IconSelect"
+import Icon from "@/components/util/icon.vue"
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
+import { addMenu, updateMenu } from "@/api/menu";
 export default {
-    components: {Treeselect, IconSelect},
+    components: {Treeselect, IconSelect, Icon},
     data() {
         return {
-            menuOptions: []
+            menuOptions: [],
+            rules: {
+              menuName: [
+                { required: true, message: "菜单名称不能为空", trigger: "blur" }
+              ],
+              orderNum: [
+                { required: true, message: "菜单顺序不能为空", trigger: "blur" }
+              ],
+              path: [
+                { required: true, message: "路由地址不能为空", trigger: "blur" }
+              ]
+          }
         }
     },
     props: ["form", "open", "formType"],
@@ -123,8 +121,7 @@ export default {
     },
     methods: {
         close() {
-            console.log("close");
-            this.$emit("handleClose")
+            this.$emit("close")
         },
         getRouters() {
             request({
@@ -147,10 +144,27 @@ export default {
             }
         },
         submitForm () {
-
+          this.$refs["form"].validate(valid => {
+            if(valid) {
+              var response = null
+              if (this.form.id === null) {
+                response = addMenu(this.form)
+              }else {
+                response = updateMenu(this.form)
+              }
+              response.then(res => {
+                this.$message({type:res.code===200? "success": "error", message: res.message})
+                if (res.code === 200) {
+                  this.close()
+                  this.$router.go(0)
+                }
+              })
+              
+            }
+          })
         },
         selected (icon) {
-            console.log(icon);
+            this.form.icon = icon
         }
     }
 }
