@@ -58,7 +58,14 @@ service.interceptors.response.use(res => {
     store.dispatch("user/LogOut").then(() => {
       location.href = '/login';
     })
-  }else {
+  }else if (code !== 200) {
+    Message({
+      type: "error",
+      message: errorMessage
+    })
+    return res.data
+  }
+  else {
     return res.data
   }
   

@@ -13,7 +13,7 @@ const menu = {
     actions: {
         GetMenus({commit}, data) {
             request({
-                url: "/menu/getMenu",
+                url: "/menu/list",
                 method: "post",
                 data: data
             }).then(res => {

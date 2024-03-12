@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wechat.web.mapper.RoleMapper">
+    <!-- 根据用户id查询用户所有的权限-->
+    <select id="selectMenuById" resultType="com.wechat.web.domain.entity.SysMenu">
+        SELECT
+            m.id, m.menu_name
+        FROM
+            role_menu_relation rm
+        join role r on r.id=rm.role_id
+        join sys_menu m on m.id=rm.menu_id
+        WHERE r.id = #{id}
+    </select>
+
+</mapper>

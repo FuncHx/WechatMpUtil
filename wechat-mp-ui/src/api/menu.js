@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 export function addMenu(form) {
     return request({
-        url: "/menu/addMenu",
+        url: "/menu/add",
         method: "post",
         data: form
     })
@@ -10,7 +10,7 @@ export function addMenu(form) {
 
 export function updateMenu(form) {
     return request({
-        url: "/menu/updateMenu",
+        url: "/menu/update",
         method: "post",
         data: form
     })
@@ -18,7 +18,7 @@ export function updateMenu(form) {
 
 export function deleteMenu(id) {
     return request( {
-        url: "/menu/deleteMenu/" + id,
+        url: "/menu/delete/" + id,
         method: "get"
     } )
 }

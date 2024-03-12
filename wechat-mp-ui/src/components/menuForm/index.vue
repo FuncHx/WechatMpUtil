@@ -125,7 +125,7 @@ export default {
         },
         getRouters() {
             request({
-                url: "/menu/getMenu",
+                url: "/menu/list",
                 method: "post",
                 data: {}
             }).then(res => {

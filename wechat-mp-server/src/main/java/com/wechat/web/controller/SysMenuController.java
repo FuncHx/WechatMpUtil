@@ -24,7 +24,7 @@ public class SysMenuController {
      * @return
      */
     @PreAuthorize("@hx.hasAuth('system:menu:list')")
-    @PostMapping("getMenu")
+    @PostMapping("list")
     public Response getMenus(@RequestBody SysMenu sysMenu) {
         List<SysMenu> sysMenus = sysMenuService.selectMenuTree(sysMenu);
         return Response.ok().data(sysMenus);
@@ -36,7 +36,7 @@ public class SysMenuController {
      * @return
      */
     @PreAuthorize("@hx.hasAuth('system:menu:add')")
-    @PostMapping("addMenu")
+    @PostMapping("add")
     public Response addMenus(@RequestBody SysMenu sysMenu) {
         boolean save = sysMenuService.save(sysMenu);
         return Response.ok().message("新增成功！");
@@ -48,7 +48,7 @@ public class SysMenuController {
      * @return
      */
     @PreAuthorize("@hx.hasAuth('system:menu:update')")
-    @PostMapping("updateMenu")
+    @PostMapping("update")
     public Response updateMenus(@RequestBody SysMenu sysMenu) {
         boolean save = sysMenuService.updateById(sysMenu);
         return Response.ok().message("修改成功！");
@@ -56,7 +56,7 @@ public class SysMenuController {
 
 
     @PreAuthorize("@hx.hasAuth('system:menu:delete')")
-    @GetMapping("deleteMenu/{id}")
+    @GetMapping("delete/{id}")
     public Response deleteMenu(@PathVariable Integer id) {
         boolean b = sysMenuService.removeById(id);
         return Response.ok().message("删除成功！");
