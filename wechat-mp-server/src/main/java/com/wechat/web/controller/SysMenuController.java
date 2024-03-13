@@ -1,6 +1,7 @@
 package com.wechat.web.controller;
 
 
+import com.wechat.web.constants.CustomConstants;
 import com.wechat.web.domain.entity.SysMenu;
 import com.wechat.web.domain.entity.TreeSelect;
 import com.wechat.web.service.SysMenuService;
@@ -38,6 +39,9 @@ public class SysMenuController {
     @PreAuthorize("@hx.hasAuth('system:menu:add')")
     @PostMapping("add")
     public Response addMenus(@RequestBody SysMenu sysMenu) {
+        if (sysMenu.getMenuType().equals(CustomConstants.TYPE_DIR)) {
+            sysMenu.setComponent("LayoutIndex");
+        }
         boolean save = sysMenuService.save(sysMenu);
         return Response.ok().message("新增成功！");
     }

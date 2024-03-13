@@ -1,32 +1,46 @@
 package com.wechat.mp.controller;
 
+import com.alibaba.fastjson2.JSON;
+import com.wechat.web.util.Response;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.menu.WxMpGetSelfMenuInfoResult;
+import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 
 
 @Slf4j
 @RestController
+@RequestMapping("/mp/menu")
 public class MenuController {
 
     @Autowired
     private WxMpService wxMpService;
 
-    @PreAuthorize("@xh.hasAuth('menu:create')")
-    @GetMapping("/createMenu")
-    public String createMenu() throws WxErrorException {
-        String json="{\"button\": [{\"name\": \"Magic\",\"type\": \"click\",\"key\": \"magic\"},{\"name\": \"授权登录\",\"type\": \"view\",\"url\": \"https://funchx.mynatapp.cc/authPage\"}]}";
-        // 获取菜单信息
-        WxMpGetSelfMenuInfoResult selfMenuInfo = wxMpService.getMenuService().getSelfMenuInfo();
-        log.info("selfMenuInfo : {}", selfMenuInfo);
-        return wxMpService.getMenuService().menuCreate(json);
+    @PreAuthorize("@hx.hasAuth('wx:menu:create')")
+    @PostMapping("create")
+    public Response createMenu(@RequestBody HashMap menu) throws WxErrorException {
+        log.info("创建菜单 : {}", JSON.toJSONString(menu));
+        String s = wxMpService.getMenuService().menuCreate(JSON.toJSONString(menu));
+        return Response.ok().data(s);
     }
 
+    @PreAuthorize("@hx.hasAuth('wx:menu:list')")
+    @GetMapping("list")
+    public Response listMenu() throws WxErrorException {
+        System.out.println("fdsafd");
+        WxMpMenu selfMenuInfo = wxMpService.getMenuService().menuGet();
+        return Response.ok().data(selfMenuInfo.getMenu());
+    }
+
+
+
+    @PreAuthorize("@hx.hasAuth('wx:menu:delete')")
     @GetMapping("deleteMenu")
     public String deleteMenu() throws WxErrorException {
         wxMpService.getMenuService().menuDelete();

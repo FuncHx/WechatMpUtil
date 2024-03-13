@@ -1,15 +1,13 @@
 package com.wechat.mp.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.apache.ibatis.type.JdbcType;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @TableName("wx_user")
@@ -23,21 +21,15 @@ public class WxUser extends Model<WxUser> {
     @TableId(type = IdType.ASSIGN_ID)
     private String id;
     /**
-     * 创建者
-     */
-    private String createId;
-    /**
      * 创建时间
      */
-    private LocalDateTime createTime;
-    /**
-     * 更新者
-     */
-    private String updateId;
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    private Date createTime;
     /**
      * 更新时间
      */
-    private LocalDateTime updateTime;
+    @TableField(value = "update_time", fill = FieldFill.INSERT)
+    private Date updateTime;
     /**
      * 备注信息
      */

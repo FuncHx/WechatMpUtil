@@ -49,6 +49,7 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
                 request.setAttribute("filter.error", new BusinessException(ResponseEnum.TOKEN_ERROR));
                 //将异常分发到/error/exthrow控制器
                 request.getRequestDispatcher("/error/exthrow").forward(request, response);
+                return;
             }
             if (claim == null) {
                 // 异常捕获，发送到error controller

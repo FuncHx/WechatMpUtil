@@ -27,14 +27,21 @@ import org.springframework.security.web.session.SessionManagementFilter;
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfig {
+
+    // 定义白名单URL路径数组
+    private static final String URL_WHITELIST[] = {
+            "/user/login",
+            "/user/register",
+            "/captchaImage",
+            "/mp/**",
+    };
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.cors();
         http.authorizeRequests()
-                        .antMatchers("/user/login").anonymous()
-                        .antMatchers("/user/register").anonymous()
-                        .antMatchers("/captchaImage").anonymous()
+                        .antMatchers(URL_WHITELIST).permitAll()
                         .anyRequest().authenticated();
 
         // 用户登录失效的处理

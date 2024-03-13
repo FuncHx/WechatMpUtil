@@ -91,7 +91,7 @@
   </template>
   
   <script>
-  import { getRoles } from "@/api/role";
+  import { getRoles, updateRoles, addRole, deleteRole } from "@/api/role";
   export default {
     components: {
     },
@@ -151,17 +151,15 @@
         this.form = row
         var keys = []
         row.data.permission.forEach(e => keys.push(e.id))
-        console.log(keys);
         this.setKeys(keys)
       },
       handleDelete(index, row) {
-        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        this.$confirm('此操作将永久删除该角色, 是否继续?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-            deleteMenu(row.id).then(res => {
-              this.$message({type: res.code === 200 ? "success":"error", message: res.message})
+            deleteRole(row.id).then(res => {
               if (res.code === 200) {
                 this.$router.go(0)
               }
@@ -186,8 +184,24 @@
         this.$refs.tree.setCheckedKeys([]);
       },
       commit() {
-        console.log(this.form);
-        console.log(this.$refs.tree.getCheckedKeys());
+        this.form.data.permission = this.$refs.tree.getCheckedKeys()
+        if (this.form.id === null) {
+          addRole(this.form).then(res => {
+            if (res.code === 200) {
+              this.$message.success(res.message)
+              this.handleClose()
+              this.onSubmit()
+            }
+          })
+        }else {
+          updateRoles(this.form).then(res => {
+            if (res.code === 200) {
+              this.$message.success(res.message)
+              this.handleClose()
+              this.onSubmit()
+            }
+          })
+        }
       }
     }
   }

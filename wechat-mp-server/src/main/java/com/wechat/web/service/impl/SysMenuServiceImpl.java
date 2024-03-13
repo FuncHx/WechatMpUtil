@@ -38,6 +38,10 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
      */
     public List<SysMenu> selectMenuTreeByUserId(Integer userId)
     {
+        // 判断用户是否为管理员
+        if (userId == 1) {
+            return getChildPerms(sysMenuMapper.selectList(null), 0);
+        }
         List<SysMenu> menus = null;
         menus = sysMenuMapper.selectListByUserId(userId);
         return getChildPerms(menus, 0);

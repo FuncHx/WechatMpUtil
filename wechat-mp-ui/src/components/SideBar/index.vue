@@ -37,6 +37,9 @@ export default {
   computed: {
     ...mapGetters(["sideBar"])
   },
+  created() {
+    console.log(this.routes);
+  },
   components: {
     CustomAside: () => import('./index.vue'), // 递归组件
     Icon

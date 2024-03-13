@@ -1,29 +1,19 @@
 package com.wechat.mp.controller;
 
 
-import com.wechat.mp.handle.ImageHandler;
-import com.wechat.mp.handle.TextHandler;
 import lombok.extern.slf4j.Slf4j;
-import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.bean.menu.WxMenu;
-import me.chanjar.weixin.common.bean.menu.WxMenuButton;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.bean.menu.WxMpGetSelfMenuInfoResult;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
-import me.chanjar.weixin.mp.bean.result.WxMpUser;
-import me.chanjar.weixin.mp.bean.result.WxMpUserList;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @RestController
+@RequestMapping("/mp")
 public class WxJavaController {
 
     @Autowired
@@ -31,6 +21,7 @@ public class WxJavaController {
 
     @Autowired
     private WxMpMessageRouter wxMpMessageRouter;
+
     /**
      * 验证消息的确来自微信服务器
      * <p>

@@ -7,6 +7,7 @@ import com.wechat.web.domain.entity.SysMenu;
 import com.wechat.web.domain.entity.SysUser;
 import com.wechat.web.mapper.SysUserMapper;
 import com.wechat.web.service.PermissionService;
+import com.wechat.web.service.SysMenuService;
 import com.wechat.web.util.Assert;
 import com.wechat.web.util.ResponseEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +32,22 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private PermissionService permissionService;
 
+    @Autowired
+    private SysMenuService sysMenuService;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         QueryWrapper<SysUser> sysUserQueryWrapper = new QueryWrapper<>();
         sysUserQueryWrapper.eq("user_name", username);
         SysUser sysUser= sysUserMapper.selectOne(sysUserQueryWrapper);
         if (sysUser==null) {throw new UsernameNotFoundException("该用户名不存在");}
+        List<SysMenu> authority;
         //获取该用户所拥有的权限
-        List<SysMenu> authority = permissionService.selectListByUserId(sysUser.getId());
+        if (sysUser.getId() == 1) { // 如果该用户为管理员
+            authority = sysMenuService.list();
+        }else {
+            authority = permissionService.selectListByUserId(sysUser.getId());
+        }
         // 获取该用户所属角色
         List<Role> role = permissionService.selectRoleListByUserId(sysUser.getId());
         //定义权限列表和角色列表

@@ -3,6 +3,7 @@ package com.wechat.web.except;
 import com.wechat.web.util.Response;
 import com.wechat.web.util.ResponseEnum;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.error.WxErrorException;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -44,6 +45,11 @@ public class UnifiedExceptionHandler {
     @ExceptionHandler(value = AccessDeniedException.class)
     public Response accessDeniedException(AccessDeniedException e) {
         return Response.setResult(ResponseEnum.AUTH_ERROR);
+    }
+
+    @ExceptionHandler(value = WxErrorException.class)
+    public Response accessWxErrorException(WxErrorException e) {
+        return Response.error().message(e.getMessage());
     }
 
     /**
