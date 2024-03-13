@@ -1,9 +1,5 @@
 package com.wechat.mp.config;
 
-import com.wechat.mp.handle.*;
-import com.wechat.mp.properties.WxMpProperties;
-import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;

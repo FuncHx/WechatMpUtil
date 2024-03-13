@@ -11,6 +11,7 @@ import me.chanjar.weixin.mp.api.WxMpMessageHandler;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
+import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,6 +33,7 @@ public class SubscribeHandler implements WxMpMessageHandler {
         LambdaQueryWrapper<WxUser> wxUserQueryWrapper = new LambdaQueryWrapper<>();
         wxUserQueryWrapper.eq(WxUser::getOpenId, wxMpXmlMessage.getFromUser());
         WxUser one = wxUserService.getOne(wxUserQueryWrapper);
+        WxMpUser wxMpUser = wxMpService.getUserService().userInfo(wxMpXmlMessage.getFromUser());
         // 判断用户之前是否关注过
         if (ObjectUtils.isEmpty(one)) {
             WxUser wxUser = new WxUser();

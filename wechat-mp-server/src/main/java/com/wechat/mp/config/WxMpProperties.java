@@ -1,4 +1,4 @@
-package com.wechat.mp.properties;
+package com.wechat.mp.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

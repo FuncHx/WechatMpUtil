@@ -1,7 +1,6 @@
 package com.wechat.web.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.wechat.mp.entity.Menu;
 import com.wechat.web.domain.entity.Role;
 import com.wechat.web.domain.entity.SysMenu;
 import org.springframework.stereotype.Service;
