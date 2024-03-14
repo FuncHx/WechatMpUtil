@@ -49,6 +49,14 @@ export const constantRoutes = [
     component: (resolve) => require(['@/views/error/401'], resolve),
     hidden: true
   },
+  {
+    path: "/qrcode",
+    component: (resolve) => require(["@/views/qrCode"], resolve)
+  },
+  {
+    path: "/magic",
+    component: (resolve) => require(["@/views/magic"], resolve)
+  }
 ]
 
 export default new Router({

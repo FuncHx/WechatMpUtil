@@ -201,7 +201,19 @@
                     url: "/mp/menu/list",
                     methods: "get"
                 }).then((res)=>{
-                    this.menu.button = res.data.buttons;
+                    res.data.buttons.forEach(res => {
+                        var obj = {}
+                        
+                        for (let [key, value] of Object.entries(res)) {
+                            if (key !== "subButtons") {
+                                obj[key] = value
+                            }else {
+                                obj["sub_button"] = value
+                            }
+                        }
+                        this.menu.button.push(obj)
+                    })
+                    console.log(this.menu);
                 });
             },
             handleClick(tab, event){

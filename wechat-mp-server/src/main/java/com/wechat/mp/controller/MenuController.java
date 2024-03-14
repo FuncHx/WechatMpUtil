@@ -33,7 +33,6 @@ public class MenuController {
     @PreAuthorize("@hx.hasAuth('wx:menu:list')")
     @GetMapping("list")
     public Response listMenu() throws WxErrorException {
-        System.out.println("fdsafd");
         WxMpMenu selfMenuInfo = wxMpService.getMenuService().menuGet();
         return Response.ok().data(selfMenuInfo.getMenu());
     }

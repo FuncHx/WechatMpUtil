@@ -23,6 +23,7 @@
     "stompjs": "^2.3.3",
     "vue": "^2.6.14",
     "vue-router": "3.2",
+    "vuedraggable": "^2.24.3",
     "vuex": "^3.6.0"
   },
   "devDependencies": {
