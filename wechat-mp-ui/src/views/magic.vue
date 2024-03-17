@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="banner-header">
+    <div class="banner-header"  ref="container">
         <img :src="headerImg">
         <div class="name">
-            <span style="font-size: 20px;font-weight: 700;">W&nbsp;</span><span class="iconfont" style="color: #50a9f6;">&#xe8c8;</span>
+            <span style="font-size: 20px;font-weight: 700;">{{ nikeName }}&nbsp;</span><span class="iconfont" style="color: #50a9f6;">&#xe8c8;</span>
             <br>
             <span style="font-size: 14px;">地区：河南 郑州</span>
         </div>
@@ -32,67 +32,85 @@
             <span class="iconfont toright">&#xe775;</span>
         </div>
     </div>
-    <div class="tag card" style="text-align: center;height: 40px;line-height: 40px;margin-top: 10px;color: #50a9f6;">
-        <span>添加通讯录</span>
+    <div class="tag card" style="text-align: center;height: 60px;line-height: 60px;margin-top: 10px;color: #5e6e8b;">
+        <span style="font-size: 20px;">添加通讯录</span>
     </div>
-    <img v-if="draggShow" @mousedown="onMove($event, item)" draggable="false" @mouseenter="move($event)" class="dragg-img" @click="zoomMax" v-for="(item, index) in imgList" :key="index" :src="item" :style="draggStyle" />
+        <img
+        v-if="draggShow"
+        class="dragg-img" 
+        @click="zoomMax" 
+        :src="showImg" 
+        :style="draggStyle" />
   </div>
 </template>
 
 <script>
-import draggable from 'vuedraggable';
+import $ from "jquery"
+import 'jquery-ui/ui/widgets/draggable.js';
+import 'jquery-ui/ui/widgets/droppable.js';
+import request from "@/utils/request"
 export default {
-    components: {draggable},
+    components: {},
+    mounted() {
+        request({
+            url: "/mp/getUserInfo?openId=" + this.$route.query.openId,
+            method: "get"
+        }).then(res => {
+            console.log(res);
+            this.showImg = res.data.uploadImg
+            this.headerImg = res.data.headerImg
+            this.nikeName = res.data.nikeName
+        })
+        var lastTouchEnd = 0;
+        document.documentElement.addEventListener('touchend', function (event) {
+        var now = Date.now();
+        if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, false);
+    },
     data() {
         return {
-            showImg: require("@/assets/images/profile.jpg"),
+            showImg: require("@/assets/images/o_vvO6fcAXtcDdbYVJMLkO6Z-UeQ.jpg"),
             headerImg: require("@/assets/images/profile.jpg"),
             imgList: [require("@/assets/images/profile.jpg")],
-            dragOptions: {
-                animation: 200,
-                ghostClass: 'ghost',
-            },
             zoom: 1,
             draggShow: false,
             draggStyle: {
                 left: 0,
                 top: 0,
                 transform: null,
-                width: 20 + "px",
-                height: 20 + "px"
             },
             size: 20,
+            drag: false
         }
     },
     methods: {
-        onDragEnd(e) {
-            console.log(e);
-        },
-        onMove (evt, item) { // 拖拽过程中触发
-            this.startx=e.pageX; this.starty=e.pageY
-            document.addEventListener('mousemove',this.mousemove)
-            item.addEventListener('mouseup',this.mouseup)
-        },
-        mousemove(e){
-            this.x=e.pageX-this.startx+this.endx
-            this.y=e.pageY-this.starty+this.endy
-            console.log(e);
-        },
-        mouseup(){
-            // 解除绑定mousemove
-            document.removeEventListener('mousemove',this.mousemove,false)
-            this.endx=this.x
-            this.endy=this.y
-        },
-
         imgClick(e) {
             this.draggStyle.left = e.pageX - e.offsetX + 'px'
             this.draggStyle.top = e.pageY- e.offsetY + 'px'
             this.draggShow = true
         },
         zoomMax (e) {
-            this.zoom += 1
-            this.draggStyle.transform = "scale(" + this.zoom+")"
+            if (this.zoom >= 10) {
+                const _this = this
+                $(document).ready(function() {
+                    $(".dragg-img").on("touchstart", function(event) {
+                        $('html').css({'overflow': 'hidden'}); 
+                    }).on("touchmove", function(event) {
+                        var touch = event.originalEvent.touches[0];
+                        var touchX = touch.pageX;
+                        var touchY = touch.pageY;
+                        _this.draggStyle.left = touchX + "px",
+                        _this.draggStyle.top = touchY + "px"
+                    }).on("touchend", function(event) {
+                    });
+                });
+            }else {
+                this.zoom += 4
+                this.draggStyle.transform = "scale(" + this.zoom+")"
+            }
         }
     }
 }
@@ -104,8 +122,10 @@ export default {
 }
 .dragg-img {
     position: absolute;
-    width: 15px;
+    width: 5%;
+    top: 50%;
     transition: transform 0.5s ease;
+    cursor: move;
 }
 </style>
 
@@ -122,10 +142,10 @@ export default {
         overflow: auto; /* 清除浮动 */
     }
     .name {
-        margin-top: 100px;
+        margin-top: 30px;
     }
     .banner-header>img {
-        margin: 100px 10px 10px 30px;
+        margin: 30px 10px 10px 30px;
         float: left; /* 向左浮动 */
         width: 55px;
         border-radius: 5px;

@@ -20,12 +20,22 @@
 </template>
 
 <script>
+import request from "@/utils/request"
 export default {
     data() {
         return {
             codeImg: require("@/assets/images/test.jpg"),
             headerImg: require("@/assets/images/profile.jpg")
         }
+    },
+    mounted() {
+        request({
+            url: "/mp/getUserInfo?openId=" + this.$route.query.openId,
+            method: "get"
+        }).then(res => {
+            this.codeImg = "data:image/gif;base64," + res.data.codeImage
+            this.headerImg = res.data.headerImg
+        })
     }
 }
 </script>
@@ -46,7 +56,7 @@ export default {
         .user-info{
             position: absolute;
             left: 32%;
-            top: 28%;
+            top: 22%;
             transform: translate(-50%, -50%);
             >img {
                 float: left;

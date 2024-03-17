@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkwechat_mp_ui"]=self["webpackChunkwechat_mp_ui"]||[]).push([[618],{1618:function(n,u,e){e.r(u),e.d(u,{default:function(){return _}});var t=function(){var n=this;n._self._c;return n._m(0)},r=[function(){var n=this,u=n._self._c;return u("div",[u("h1",[n._v("首页")])])}],c={name:"index"},i=c,l=e(1656),s=(0,l.A)(i,t,r,!1,null,null,null),_=s.exports}}]);
+//# sourceMappingURL=618.86f79f06.js.map

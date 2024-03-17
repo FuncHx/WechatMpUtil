@@ -68,7 +68,12 @@ public class WebSecurityConfig {
                     "/v2/**",
                     "/swagger-ui.html/**",
                     "/doc.html",
-                    "/static/**");
+                    "/static/**",
+                    "/index/**",
+                    "/css/**",
+                    "/js/**",
+                    "/fonts/**"
+            );
         };
 
     }

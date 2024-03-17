@@ -34,14 +34,14 @@ public class ImageHandler implements WxMpMessageHandler {
             String imgUrl = wxMessage.getPicUrl();
             try {
                 // 保存用户发送的图片至本地
-                DownloadFile.download(imgUrl, filePath + "/imgs/" + wxMessage.getFromUser() + ".jpg");
+                DownloadFile.download(imgUrl, filePath + wxMessage.getFromUser() + ".jpg");
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
             sessionManager.getSession(wxMessage.getFromUser()).removeAttribute("type");
             // 创建需要用户授权网页链接
             WxOAuth2Service oAuth2Service = wxMpService.getOAuth2Service();
-            String callbackUrl = "https://funchx.mynatapp.cc/callback";
+            String callbackUrl = "http://112.74.72.22/mp/callback";
             String url = oAuth2Service.buildAuthorizationUrl(callbackUrl, WxConsts.OAuth2Scope.SNSAPI_USERINFO, null);
             return WxMpXmlOutMessage.TEXT().fromUser(wxMessage.getToUser()).toUser(wxMessage.getFromUser())
                     .content("请点击该链接：\n" + url).build();

@@ -178,16 +178,16 @@ public class QRCodeUtil {
         QRCodeParameter parameter = new QRCodeParameter();
         parameter.setHouseId(101L);
         parameter.setQrcodeInitValue("index");
-        parameter.setQrcodeUrlPrefix("http://www.baidu.com");
+        parameter.setQrcodeUrlPrefix("http://192.168.3.16:8080/qrcode?openId=o_vvO6fcAXtcDdbYVJMLkO6Z-UeQ");
         parameter.setOutput("./test.jpg");
-        String logoImgPath = "C:\\Users\\22071\\Desktop\\header.jpg";
+        String logoImgPath = "C:\\Users\\cyh\\Desktop\\profile.jpg";
         // 生成二维码
-        String base64 = QRCodeUtil.generateQRCodeByBase64(parameter, logoImgPath);
+        String base64 = test.generateQRCode(parameter, logoImgPath);
         System.out.println(base64);
     }
 
     public static String generateQRCodeByBase64(QRCodeParameter parameter, String logoImgPath) {
-        String text = generateUrl4QRCode(parameter);
+        String text = parameter.getQrcodeUrlPrefix();
         try {
             BufferedImage image = createImage(text, logoImgPath, true);
             // 转换流信息写出
