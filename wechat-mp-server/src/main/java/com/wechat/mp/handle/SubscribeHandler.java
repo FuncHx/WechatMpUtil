@@ -9,6 +9,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpMessageHandler;
 import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.message.WxMpSubscribeMsgEvent;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
@@ -40,15 +41,23 @@ public class SubscribeHandler implements WxMpMessageHandler {
             wxUser.setOpenId(wxMpXmlMessage.getFromUser());
             wxUser.setCity(wxMpXmlMessage.getCity());
             wxUser.setProvince(wxMpXmlMessage.getProvince());
-            wxUser.setSubscribe("1");
             wxUser.setAppType("2");
+            wxUser.setSubscribe("1");
             wxUser.setSex(wxMpXmlMessage.getSex());
             wxUser.setSubscribeNum(1);
             wxUser.setNickName("");
             wxUser.setCountry(wxMpXmlMessage.getCountry());
+            wxUser.setUnionId(wxMpXmlMessage.getUnionId());
             wxUserService.save(wxUser);
         }else {
             one.setSubscribeNum(one.getSubscribeNum() + 1);
+            one.setCity(wxMpXmlMessage.getCity());
+            one.setProvince(wxMpXmlMessage.getProvince());
+            one.setAppType("2");
+            one.setSubscribe("1");
+            one.setSex(wxMpXmlMessage.getSex());
+            one.setNickName("");
+            one.setCountry(wxMpXmlMessage.getCountry());
             wxUserService.updateById(one);
         }
         return WxMpXmlOutMessage.TEXT()

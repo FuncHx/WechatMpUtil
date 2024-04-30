@@ -2,19 +2,23 @@ package com.wechat.mp.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.wechat.mp.config.typehandler.ArrayListTypeHandler;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.apache.ibatis.type.JdbcType;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Data
 @TableName("wx_user")
 @EqualsAndHashCode(callSuper = true)
-public class WxUser extends Model<WxUser> {
+public class WxUser extends Model<WxUser> implements Serializable {
     private static final long serialVersionUID = 1L;
-
     /**
      * 主键
      */
@@ -109,7 +113,8 @@ public class WxUser extends Model<WxUser> {
     /**
      * 标签列表
      */
-    private Long[] tagidList;
+    @TableField(value = "tagid_list", typeHandler = ArrayListTypeHandler.class, jdbcType= JdbcType.VARCHAR)
+    private ArrayList<Integer> tagidList;
     /**
      * 二维码扫码场景
      */

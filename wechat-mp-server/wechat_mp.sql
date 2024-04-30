@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 本地
+ Source Server         : localhost_3306
  Source Server Type    : MySQL
- Source Server Version : 80030
+ Source Server Version : 80032
  Source Host           : localhost:3306
  Source Schema         : wechat_mp
 
  Target Server Type    : MySQL
- Target Server Version : 80030
+ Target Server Version : 80032
  File Encoding         : 65001
 
- Date: 15/03/2024 13:09:56
+ Date: 30/04/2024 18:14:46
 */
 
 SET NAMES utf8mb4;
@@ -24,18 +24,18 @@ DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role`  (
   `id` int(0) NOT NULL AUTO_INCREMENT,
   `role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `role_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `update_time` timestamp(0) NULL DEFAULT NULL,
   `create_time` timestamp(0) NULL DEFAULT NULL,
+  `update_time` timestamp(0) NULL DEFAULT NULL,
+  `role_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `role_role_uindex`(`role`) USING BTREE,
   UNIQUE INDEX `role_role_name_uindex`(`role_name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role
 -- ----------------------------
-INSERT INTO `role` VALUES (2, 'admin', '管理员', '2024-03-12 19:22:19', '2024-03-12 19:22:20');
+INSERT INTO `role` VALUES (2, 'admin', '2024-03-13 09:14:38', '2024-04-29 07:10:02', '管理员');
+INSERT INTO `role` VALUES (3, 'boss', '2024-03-08 17:22:49', '2024-03-13 02:09:04', '老板');
 
 -- ----------------------------
 -- Table structure for role_menu_relation
@@ -49,15 +49,28 @@ CREATE TABLE `role_menu_relation`  (
   INDEX `role_permission_relation_permission_id_fk`(`menu_id`) USING BTREE,
   INDEX `role_permission_relation_role_id_fk`(`role_id`) USING BTREE,
   CONSTRAINT `role_permission_relation_role_id_fk` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 698 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色权限关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 772 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色权限关联表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role_menu_relation
 -- ----------------------------
-INSERT INTO `role_menu_relation` VALUES (559, 2, 1);
-INSERT INTO `role_menu_relation` VALUES (563, 2, 100);
-INSERT INTO `role_menu_relation` VALUES (564, 2, 101);
-INSERT INTO `role_menu_relation` VALUES (565, 2, 102);
+INSERT INTO `role_menu_relation` VALUES (701, 3, 1001);
+INSERT INTO `role_menu_relation` VALUES (702, 3, 2061);
+INSERT INTO `role_menu_relation` VALUES (758, 2, 1);
+INSERT INTO `role_menu_relation` VALUES (759, 2, 102);
+INSERT INTO `role_menu_relation` VALUES (760, 2, 1001);
+INSERT INTO `role_menu_relation` VALUES (761, 2, 2061);
+INSERT INTO `role_menu_relation` VALUES (762, 2, 2062);
+INSERT INTO `role_menu_relation` VALUES (763, 2, 2063);
+INSERT INTO `role_menu_relation` VALUES (764, 2, 2064);
+INSERT INTO `role_menu_relation` VALUES (765, 2, 2065);
+INSERT INTO `role_menu_relation` VALUES (766, 2, 2066);
+INSERT INTO `role_menu_relation` VALUES (767, 2, 2068);
+INSERT INTO `role_menu_relation` VALUES (768, 2, 2069);
+INSERT INTO `role_menu_relation` VALUES (769, 2, 2070);
+INSERT INTO `role_menu_relation` VALUES (770, 2, 2071);
+INSERT INTO `role_menu_relation` VALUES (771, 2, 2072);
+INSERT INTO `role_menu_relation` VALUES (772, 2, 2073);
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -79,15 +92,27 @@ CREATE TABLE `sys_menu`  (
   `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '路由地址',
   `component` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '组件路径',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2060 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2075 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
 INSERT INTO `sys_menu` VALUES (1, '系统管理', 0, 10, 'M', '0', '0', '', 'shezhi', '2021-01-14 15:39:13', '2021-01-21 17:43:31', '系统管理目录', 'system', 'LayoutIndex');
-INSERT INTO `sys_menu` VALUES (100, '用户管理', 1, 1, 'C', '0', '0', 'system:user:list', 'wode', '2021-01-14 15:39:13', NULL, '用户管理菜单', 'user', 'system/user/index');
-INSERT INTO `sys_menu` VALUES (101, '角色管理', 1, 2, 'C', '0', '0', 'system:role:list', 'zuzhi', '2021-01-14 15:39:13', NULL, '角色管理菜单', 'role', 'system/role/index');
-INSERT INTO `sys_menu` VALUES (102, '菜单管理', 1, 3, 'C', '0', '0', 'system:menu:list', 'fenlei', '2021-01-14 15:39:13', NULL, '菜单管理菜单', 'menu', 'system/menu/index');
+INSERT INTO `sys_menu` VALUES (102, '菜单管理', 1, 3, 'C', '0', '0', 'system:menu:list', 'fenlei', '2021-01-14 15:39:13', '2024-03-12 09:52:00', '菜单管理菜单', 'menu', 'system/menu/index');
+INSERT INTO `sys_menu` VALUES (1001, '新增菜单', 102, 1, 'F', '0', '0', 'system:menu:add', '#', '2024-03-12 17:36:57', '2024-03-12 17:37:00', '新增菜单', NULL, NULL);
+INSERT INTO `sys_menu` VALUES (2061, '删除菜单', 102, 0, 'F', '0', '0', 'system:menu:delete', '', '2024-03-12 09:52:35', '2024-03-12 09:52:35', '', '', '');
+INSERT INTO `sys_menu` VALUES (2062, '修改菜单', 102, 1, 'F', '0', '0', 'system:menu:update', '', '2024-03-12 10:21:17', '2024-03-12 10:21:17', '', '', '');
+INSERT INTO `sys_menu` VALUES (2063, '角色管理', 1, 1, 'C', '0', '0', 'system:role:list', 'zuzhi', '2024-03-13 01:17:53', '2024-03-13 01:24:02', '', 'role', 'system/role/index');
+INSERT INTO `sys_menu` VALUES (2064, '新增角色', 2063, 0, 'F', '0', '0', 'system:role:add', '', '2024-03-13 01:47:25', '2024-03-13 01:47:25', '', '', '');
+INSERT INTO `sys_menu` VALUES (2065, '修改角色', 2063, 0, 'F', '0', '0', 'system:role:update', '', '2024-03-13 01:47:50', '2024-03-13 01:47:50', '', '', '');
+INSERT INTO `sys_menu` VALUES (2066, '删除角色', 2063, 0, 'F', '0', '0', 'system:role:delete', '', '2024-03-13 01:48:17', '2024-03-13 01:48:17', '', '', '');
+INSERT INTO `sys_menu` VALUES (2068, '公众号管理', 0, 1, 'M', '0', '0', '', 'dengji', '2024-03-13 02:26:18', '2024-03-13 02:26:18', '', 'wx', 'LayoutIndex');
+INSERT INTO `sys_menu` VALUES (2069, '消息管理', 2068, 0, 'C', '0', '0', 'wx:message:list', 'xiaoxi2', '2024-03-13 02:31:27', '2024-03-13 02:32:19', '', 'message', 'wx/message/index');
+INSERT INTO `sys_menu` VALUES (2070, '菜单管理', 2068, 1, 'C', '0', '0', 'wx:menu:list', 'fenlei', '2024-03-13 06:54:49', '2024-03-13 07:12:11', '', '/wx/menu', 'wx/menu/index');
+INSERT INTO `sys_menu` VALUES (2071, '创建菜单', 2070, 0, 'F', '0', '0', 'wx:menu:create', '', '2024-03-13 08:30:03', '2024-03-13 08:30:03', '', '', '');
+INSERT INTO `sys_menu` VALUES (2072, '素材管理', 2068, 2, 'C', '0', '0', 'wx:material:list', 'tupian', '2024-03-14 02:57:17', '2024-03-14 02:57:17', '', 'material', 'wx/material/index');
+INSERT INTO `sys_menu` VALUES (2073, '用户管理', 2068, 0, 'C', '0', '0', 'wx:user:list', 'zuzhi', '2024-04-28 07:34:30', '2024-04-28 07:34:30', '', '/wx/user', 'wx/user/index');
+INSERT INTO `sys_menu` VALUES (2074, '标签管理', 2068, 0, 'C', '0', '0', 'wx:tag:list', 'fengxian', '2024-04-29 08:08:02', '2024-04-29 08:08:02', '', '/wx/tag', 'wx/tag/index');
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -115,7 +140,7 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (6, 'admin', 'W', '2207153529@qq.com', '15116464005', '0', 'http://localhost:80/static/65ba6a1c76e34f6098b54c7e448d832c.jpg', '$2a$10$KQC.ResjZT9QCbgbnIPicuD0eJeK0THtC9BzKi5Ofl.7DgqHm5vMC', '1', '0', '', NULL, '2024-03-02 14:59:01', '2024-03-09 13:46:25');
+INSERT INTO `sys_user` VALUES (1, 'admin', 'W', '2207153529@qq.com', '15116464005', '0', 'http://localhost:80/static/4598f0e9716642bbb4d3fab088db126d.jpg', '$2a$10$OiLZmjXmxSnU.zSqzTqfD.r21LPL/FONKQWdetgQcHae.TNitDtkq', '1', '0', '', NULL, '2024-03-02 14:59:01', '2024-03-11 01:29:14');
 
 -- ----------------------------
 -- Table structure for user_role_relation
@@ -130,12 +155,12 @@ CREATE TABLE `user_role_relation`  (
   INDEX `user_role_relation_sys_user_user_id_fk`(`user_id`) USING BTREE,
   CONSTRAINT `user_role_relation_role_id_fk` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `user_role_relation_sys_user_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_role_relation
 -- ----------------------------
-INSERT INTO `user_role_relation` VALUES (3, 6, 2);
+INSERT INTO `user_role_relation` VALUES (5, 1, 2);
 
 -- ----------------------------
 -- Table structure for wx_auto_reply
@@ -215,10 +240,8 @@ CREATE TABLE `wx_msg`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `wx_user`;
 CREATE TABLE `wx_user`  (
-  `id` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '主键',
-  `create_id` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '创建者',
+  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '主键',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
-  `update_id` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '更新者',
   `update_time` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `remark` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '用户备注',
   `del_flag` char(2) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '逻辑删除标记（0：显示；1：隐藏）',
@@ -230,7 +253,7 @@ CREATE TABLE `wx_user`  (
   `cancel_subscribe_time` datetime(0) NULL DEFAULT NULL COMMENT '取消关注时间',
   `open_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户标识',
   `nick_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '昵称',
-  `sex` char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '性别（1：男，2：女，0：未知）',
+  `sex` char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '性别（1：男，2：女，0：未知）',
   `city` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '所在城市',
   `country` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '所在国家',
   `province` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '所在省份',
@@ -252,5 +275,7 @@ CREATE TABLE `wx_user`  (
 -- ----------------------------
 -- Records of wx_user
 -- ----------------------------
+INSERT INTO `wx_user` VALUES ('1784871949806469122', '2024-04-29 09:06:49', '2024-04-30 15:44:07', '管理员', '0', '2', '1', NULL, NULL, 10, '2024-04-30 17:39:42', 'o_vvO6fcAXtcDdbYVJMLkO6Z-UeQ', '', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '[2]', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `wx_user` VALUES ('1785148332646588418', '2024-04-30 03:25:04', '2024-04-30 15:44:07', NULL, '0', NULL, '1', NULL, NULL, NULL, NULL, 'test', 'W', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
